@@ -1,0 +1,63 @@
+/* UserForm.css */
+
+.user-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    margin-top: 30px;
+  }
+  
+  .user-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .time-control {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+  }
+  
+  .time-control button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #45a049;
+    margin: 0 auto;
+  }
+  
+  

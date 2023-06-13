@@ -11,13 +11,12 @@ const cycles = [
 function SingleCycle()
 {
     return(
-        
     <Card className="text-center">
       <Card.Header> {cycles[1].name }</Card.Header>
       <Card.Body>
         <Card.Title> {cycles[1].model} </Card.Title>
         <Card.Text>
-          PRICE = {cycles[1].price}
+          PRICE/hr = {cycles[1].price}
         </Card.Text>
         <Button variant="primary"> RENT </Button>
       </Card.Body>

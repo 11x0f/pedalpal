@@ -6,8 +6,9 @@ import { Link , useNavigate } from 'react-router-dom';
 function onLogOut(navigate)
 {
   
-  localStorage.removeItem("loggedInUser")
-  navigate("/login")
+  sessionStorage.removeItem("phoneNumber");
+  console.log(sessionStorage.getItem("phoneNumber"))
+  navigate("/")
 }
 function Header()
 {
@@ -21,6 +22,7 @@ function Header()
       <Link  style={{margin:"5px"}} to="/features"> <Nav >Features</Nav> </Link>
       <Link style={{margin:"5px"}} to="/pricing"> <Nav> Pricing </Nav> </Link>
       <Link style={{margin:"5px"}} to="/pricing"> <Nav> Help </Nav> </Link>
+      <Link style={{margin:"5px"}} to="/locate"> <Nav> Locate Bikes </Nav> </Link>
     </Nav>
     </Container>
     <button onClick={()=>onLogOut(navigate)}>Log out</button>

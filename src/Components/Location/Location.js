@@ -1,14 +1,26 @@
 import React from "react";
 import './Location.css';
 import Map from "../Map/Map";
+import Header from "../Header/Header";
+import { useNavigate } from "react-router-dom";
+
+function onProceed(navigate)
+{
+    navigate('/cyclelist')
+}
 
 function Location()
 {
+    let navigate = useNavigate();
     return(
-        <div className="App">
+        <div>
+            <Header/>
+            <div className="App">
             <Map/>
-            <button className="button"> Proceed to book </button>
+            <button onClick={()=>onProceed(navigate)} className="button"> Proceed to book </button>
         </div>
+        </div>
+        
     );
 }
 
