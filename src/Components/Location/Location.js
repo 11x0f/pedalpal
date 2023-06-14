@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function onProceed(navigate)
 {
-    navigate('/cyclelist')
+    navigate('/hub')
 }
 
 function Location()

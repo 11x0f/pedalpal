@@ -1,0 +1,13 @@
+.text-red {
+    color: red;
+  }
+  
+  .text-green {
+    color: green;
+  }
+
+  .text-center
+  {
+    margin-bottom: 10px;
+    margin: 10px black;
+  }

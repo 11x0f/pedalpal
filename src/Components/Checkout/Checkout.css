@@ -1,0 +1,35 @@
+.checkout-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  .checkout-heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .checkout-information {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .redirect-button {
+    background-color: seagreen;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .redirect-button:hover {
+    background-color: #45a049;
+  }
+  

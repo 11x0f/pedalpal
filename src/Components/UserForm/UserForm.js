@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const UserForm = () => {
   const {id} = useParams();
+  /* console.log(id); */
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [hours, setHours] = useState(0);
@@ -68,14 +69,25 @@ const UserForm = () => {
     e.preventDefault();
     // Handle form submission
 
-    console.log('Form submitted:', {
+    /* console.log('Form submitted:', {
       name,
       phoneNumber,
       hours,
       minutes,
       paymentMethod,
-    });
-    navigate(`/payment/${id}/${name}/${phoneNumber}/${hours}/${minutes}/${paymentMethod}`);
+    }); */
+
+    
+    
+   
+      const Bid = id; // Assign the value of id to Bid variable
+      const paramPhone = phoneNumber;
+      navigate(`/payment/${Bid}/${name}/${paramPhone}/${hours}/${minutes}/${paymentMethod}`);
+      /* console.log("bid asdf :", Bid); */
+    
+    
+    /* const Bid = id;
+    navigate(`/payment/${Bid}/${name}/${phoneNumber}/${hours}/${minutes}/${paymentMethod}`); */
     /* navigate(`/userdetails/${id}`); */
   };
   const navigate = useNavigate();

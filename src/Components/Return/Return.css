@@ -1,0 +1,22 @@
+.message-box {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .message {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: seagreen;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  

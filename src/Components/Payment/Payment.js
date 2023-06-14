@@ -5,8 +5,10 @@ import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const Payment = ({ id, name, phoneNumber }) => {
-  const { paymentMethod, hours, minutes } = useParams();
+const Payment = ({ id,name, phoneNumber }) => {
+  const { Bid,  paymentMethod, hours, minutes ,paramPhone} = useParams();
+
+
   const [nameOnCard, setNameOnCard] = useState('');
   const [cardNo, setCardNo] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
@@ -17,6 +19,7 @@ const Payment = ({ id, name, phoneNumber }) => {
   const [password, setPassword] = useState('');
   const [cardType, setCardType] = useState('');
   const [paymentCompany, setPaymentCompany] = useState('');
+  const [cyclesData, setCyclesData] = useState([]);
 
   const amountToBePaid = 2 * hours + 0.01 * minutes;
 
@@ -25,20 +28,15 @@ const Payment = ({ id, name, phoneNumber }) => {
   const handleNameOnCardChange = (e) => {
     setNameOnCard(e.target.value);
   };
-
-  // Rest of the handleChange functions...
   const handleCardNoChange = (e) => {
     setCardNo(e.target.value);
   };
-
   const handleExpirationDateChange = (e) => {
     setExpirationDate(e.target.value);
   };
-
   const handleCvvChange = (e) => {
     setCvv(e.target.value);
   };
-
   const handleBankNameChange = (e) => {
     setBankName(e.target.value);
   };
@@ -60,7 +58,7 @@ const Payment = ({ id, name, phoneNumber }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Process the payment data
-    console.log('Payment submitted:', {
+    /* console.log('Payment submitted:', {
       id,
       name,
       phoneNumber,
@@ -77,16 +75,34 @@ const Payment = ({ id, name, phoneNumber }) => {
       password,
       cardType,
       paymentCompany,
-    });
+    }); */
     // Reset form fields
-    setNameOnCard('');
-    setCardNo('');
-    setExpirationDate('');
-    setCvv('');
-    setBankName('');
-    setUpiId('');
-    setUsername('');
-    setPassword('');
+      setNameOnCard('');
+      setCardNo('');
+      setExpirationDate('');
+      setCvv('');
+      setBankName('');
+      setUpiId('');
+      setUsername('');
+      setPassword('');
+
+      const cycles1 = cyclesData.map((cycle) => {
+        if (cycle.id === Number(Bid)) {
+          return { ...cycle, isBooked: true };
+        } else {
+          return cycle;
+        }
+      });
+
+      /* console.log(cycles1); */
+      
+      localStorage.removeItem('cycles');
+
+      localStorage.setItem('cycles', JSON.stringify(cycles1));
+
+      navigate(`/checkout/${Bid}/${paramPhone}`)
+      
+
   };
 
 
@@ -100,11 +116,26 @@ const Payment = ({ id, name, phoneNumber }) => {
       
       return ;
   }
-  },[])
+  },[]);
+
+
+  useEffect(() => {
+    const storedCycles = localStorage.getItem('cycles');
+    if (storedCycles) {
+      setCyclesData(JSON.parse(storedCycles));
+    }
+  }, []);
+  
+
+  /* console.log(cyclesData); */
+
+  /* console.log(cyclesData); */
 
   return (
     <div>
       <Header/>
+
+      <marquee> Your phone number and name will be stored in database till the time you return the cycle </marquee>
       <div className="payment-form">
       <h2>Payment Details</h2>
       <div>Amount to be paid: ₹ {amountToBePaid}</div>
@@ -237,28 +268,3 @@ const Payment = ({ id, name, phoneNumber }) => {
 };
 
 export default Payment;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,27 @@
+.hub-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+    margin-top: 50px;
+  }
+  
+  .hub-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .hub-select {
+    margin-bottom: 20px;
+    max-width: 200px;
+    text-align: center;
+  }
+  
+  .hub-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    
+  }
+  
