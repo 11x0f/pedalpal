@@ -1,74 +1,181 @@
-import React from 'react';
-import './Return.css';
-import Header from '../Header/Header';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from "react";
+
+import {
+    useNavigate,
+    useParams,
+} from "react-router-dom";
+
+import Header from "../Header/Header";
+
+import "./Return.css";
 
 function BikeReturnMessage() {
-  const navigate = useNavigate();
-  const {phoneNumber,uniqueId,rlocation,} = useParams();
 
-  function returnToHome() {
-    // Logic to handle returning to the home page
-    // You can use React Router or implement your own logic here
+    const navigate = useNavigate();
 
-    //getting customer data
-    const existingCustomers = JSON.parse(localStorage.getItem('customerData'));
-    console.log(existingCustomers);
-    console.log(phoneNumber);
-    console.log(uniqueId);
-    console.log(rlocation);
+    const {
+        phoneNumber,
+        uniqueId,
+        rlocation,
+    } = useParams();
 
-    //pop customers 
-    const filteredData = existingCustomers.filter(
-      (customer) =>
-        customer.phoneNumber !== phoneNumber || customer.uniqueId !== uniqueId
+    const returnToHome = () => {
+
+        const existingCustomers =
+            JSON.parse(
+                localStorage.getItem(
+                    "customerData"
+                )
+            ) || [];
+
+        const filteredCustomers =
+            existingCustomers.filter(
+                (customer) =>
+
+                    customer.phoneNumber !==
+                        phoneNumber ||
+
+                    customer.uniqueId !==
+                        uniqueId
+            );
+
+        localStorage.setItem(
+
+            "customerData",
+
+            JSON.stringify(
+                filteredCustomers
+            )
+        );
+
+        const existingCycles =
+            JSON.parse(
+                localStorage.getItem(
+                    "cycles"
+                )
+            ) || [];
+
+        const updatedCycles =
+            existingCycles.map(
+                (cycle) => {
+
+                    if (
+                        cycle.unqId ===
+                        uniqueId
+                    ) {
+
+                        return {
+
+                            ...cycle,
+
+                            isBooked: false,
+
+                            position:
+                                rlocation,
+                        };
+                    }
+
+                    return cycle;
+                }
+            );
+
+        localStorage.setItem(
+
+            "cycles",
+
+            JSON.stringify(
+                updatedCycles
+            )
+        );
+
+        navigate("/home");
+    };
+
+    return (
+
+        <div>
+
+            <Header />
+
+            <div className="return-page">
+
+                <div className="return-card">
+
+                    <div className="success-circle">
+                        ✓
+                    </div>
+
+                    <h1>
+                        Bike Returned!
+                    </h1>
+
+                    <p>
+                        Your ride has been
+                        successfully returned.
+                    </p>
+
+                    <div className="summary-box">
+
+                        <div className="summary-row">
+
+                            <span>
+                                Phone Number
+                            </span>
+
+                            <strong>
+                                {phoneNumber}
+                            </strong>
+
+                        </div>
+
+                        <div className="summary-row">
+
+                            <span>
+                                Return Hub
+                            </span>
+
+                            <strong>
+                                {rlocation}
+                            </strong>
+
+                        </div>
+
+                        <div className="summary-row">
+
+                            <span>
+                                Return ID
+                            </span>
+
+                            <strong>
+                                {uniqueId}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <div className="thank-you-box">
+
+                        Thank you for riding
+                        with PedalPal 🚲
+
+                    </div>
+
+                    <button
+                        className="home-btn"
+                        onClick={
+                            returnToHome
+                        }
+                    >
+                        Return Home
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
     );
-
-    console.log(filteredData);
-
-    if(filteredData !== []){
-      const updatedData = JSON.stringify(filteredData);
-      localStorage.setItem('customerData',updatedData);
-    }
-
-    //modify cycles
-    const existingState = JSON.parse(localStorage.getItem('cycles'));
-    console.log("initial: ",existingState);
-    localStorage.removeItem('cycles');
-
-
-    console.log(rlocation);
-    const updatedState = existingState.map((cycle) => {
-      if (cycle.unqId === uniqueId) {
-        return {
-          ...cycle,
-          isBooked: false,
-          position: rlocation,
-        };
-      }
-      return cycle;
-    }
-  )
-
-  console.log("middle: ",updatedState);
-
-  const cycles = JSON.stringify(updatedState);
-  console.log("Final:",cycles);
-  localStorage.setItem('cycles',cycles);
-
-    /* navigate('/home'); */
-  }
-
-  return (
-    <div>
-      <Header/>
-      <div className="message-box">
-      <div className="message">Bike successfully returned!</div>
-      <button className="button" onClick={returnToHome}> Return to Home </button>
-    </div>
-    </div>
-    
-  );
 }
 
 export default BikeReturnMessage;

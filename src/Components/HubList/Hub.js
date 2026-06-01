@@ -1,154 +1,124 @@
 import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import Header from "../Header/Header";
+
 import "./Hub.css";
 
 function Hub() {
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-const [selectedHub,setSelectedHub] =
-useState("");
+    const [selectedHub, setSelectedHub] =
+        useState("");
 
-const hubs = [
+    const hubs = [
+        {
+            id: "railway",
+            name: "Kannur Railway Station",
+            icon: "🚆",
+            desc: "Fast city pickup point",
+        },
+        {
+            id: "airport",
+            name: "Kannur International Airport",
+            icon: "✈️",
+            desc: "Traveler's mobility hub",
+        },
+        {
+            id: "payyambalam",
+            name: "Payyambalam Beach",
+            icon: "🏖️",
+            desc: "Ride along the coastline",
+        },
+        {
+            id: "fortroad",
+            name: "Fort Road",
+            icon: "🏙️",
+            desc: "Central city location",
+        },
+    ];
 
-{
-id:"railway",
-name:"Kannur Railway Station",
-icon:"🚆",
-desc:"Fast city pickup point"
-},
+    const handleNavigate = () => {
 
-{
-id:"airport",
-name:"Kannur International Airport",
-icon:"✈️",
-desc:"Traveler's mobility hub"
-},
+        if (!selectedHub) {
+            return;
+        }
 
-{
-id:"payyambalam",
-name:"Payyambalam Beach",
-icon:"🏖️",
-desc:"Ride along the coastline"
-},
+        navigate(
+            `/cyclelist/${selectedHub}`
+        );
+    };
 
-{
-id:"fortroad",
-name:"Fort Road",
-icon:"🏙️",
-desc:"Central city location"
-},
+    return (
+        <div>
 
-{
-id:"thalassery",
-name:"Thalassery",
-icon:"🌴",
-desc:"Historic coastal route"
-}
+            <Header />
 
-];
+            <div className="hub-page">
 
-const handleNavigate=()=>{
+                <div className="hub-header">
 
-if(selectedHub){
+                    <h1>
+                        Choose Your Pickup Hub
+                    </h1>
 
-navigate(
-`/cyclelist/${selectedHub}`
-);
+                    <p>
+                        Find bicycles near
+                        popular places in Kannur.
+                    </p>
 
-}
+                </div>
 
-};
+                <div className="hub-grid">
 
-return (
+                    {hubs.map((hub) => (
 
-<div>
+                        <div
+                            key={hub.id}
+                            className={`hub-card ${
+                                selectedHub === hub.id
+                                    ? "selected"
+                                    : ""
+                            }`}
+                            onClick={() =>
+                                setSelectedHub(
+                                    hub.id
+                                )
+                            }
+                        >
 
-<Header/>
+                            <div className="hub-icon">
+                                {hub.icon}
+                            </div>
 
-<div className="hub-page">
+                            <h3>
+                                {hub.name}
+                            </h3>
 
-<div className="hub-header">
+                            <p>
+                                {hub.desc}
+                            </p>
 
-<h1>
+                        </div>
 
-Choose Your Pickup Hub
+                    ))}
 
-</h1>
+                </div>
 
-<p>
+                <button
+                    className="continue-btn"
+                    onClick={handleNavigate}
+                    disabled={!selectedHub}
+                >
+                    View Available Cycles
+                </button>
 
-Find cycles near popular places in Kannur.
+            </div>
 
-</p>
-
-</div>
-
-<div className="hub-grid">
-
-{
-hubs.map((hub)=>(
-
-<div
-
-key={hub.id}
-
-className={`hub-card ${
-selectedHub===hub.id
-? "selected"
-: ""
-}`}
-
-onClick={()=>
-setSelectedHub(
-hub.id
-)
-}
-
->
-
-<div className="hub-icon">
-
-{hub.icon}
-
-</div>
-
-<h3>
-
-{hub.name}
-
-</h3>
-
-<p>
-
-{hub.desc}
-
-</p>
-
-</div>
-
-))
-}
-
-</div>
-
-<button
-className="continue-btn"
-onClick={handleNavigate}
-disabled={!selectedHub}
->
-
-View Available Cycles
-
-</button>
-
-</div>
-
-</div>
-
-);
-
+        </div>
+    );
 }
 
 export default Hub;

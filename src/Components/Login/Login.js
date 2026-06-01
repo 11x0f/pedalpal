@@ -1,86 +1,142 @@
-import React, { useState } from 'react';
-import './Login.css';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import React, {
+    useEffect,
+    useState,
+} from "react";
 
-const Login = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  
-  const [otp, setOtp] = useState('');
+import { useNavigate } from "react-router-dom";
 
-  const navigate = useNavigate();
+import "./Login.css";
 
-  const handlePhoneNumberChange = (event) => {
-    setPhoneNumber(event.target.value);
-  };
+function Login() {
 
-  const generateOtp = () => {
-    const generatedOtp = Math.floor(100000 + Math.random() * 900000);
-    setOtp(generatedOtp);
-    console.log('OTP sent to', phoneNumber, 'is:', generatedOtp);
-  };
+    const navigate = useNavigate();
 
-  const handleLoginFormSubmit = (event) => {
-    event.preventDefault();
-    console.log('Entered OTP:', otp);
-    // Perform OTP validation here
+    const [phoneNumber, setPhoneNumber] =
+        useState("");
 
-    // Assuming OTP validation is successful, create a session token
-    const sessionToken = generateSessionToken();
-  
-    // Store the session token in session storage
-    console.log(phoneNumber);
-    if(phoneNumber!=null || phoneNumber===" ")
-      {
-        sessionStorage.setItem('phoneNumber', phoneNumber);
+    const [otp, setOtp] =
+        useState("");
 
-    // Redirect the user to the home page
-      navigate('/home');
-      }
-  };
+    const storedPhone =
+        sessionStorage.getItem(
+            "phoneNumber"
+        );
 
-  const generateSessionToken = () => {
-    // Generate a random session token here
-    // You can use a library like uuid to generate a unique session token
-    const sessionToken = 'example_session_token';
+    useEffect(() => {
 
-    return sessionToken;
-  };
+        if (storedPhone) {
+            navigate("/home");
+        }
 
-  const phonenum = sessionStorage.getItem("phoneNumber");
+    }, [navigate, storedPhone]);
 
+    const generateOtp = () => {
 
-  useEffect( ()=>{
-      if(phonenum != null)
-  {
-      navigate("/home");
-      
-      return ;
-  }
-  },[])
+        const generatedOtp =
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            );
 
-  return (
-    <div className="login-container">
-      <div className="login-form">
-        <h2>Welcome Back 🚲</h2>
-        <p>Book your next ride instantly.</p>
-        <form onSubmit={handleLoginFormSubmit}>
-          <label>
-            Phone Number:
-            <input type="text" value={phoneNumber} onChange={handlePhoneNumberChange} required />
-          </label>
-          <button type="button" onClick={generateOtp}>Generate OTP</button>
-          <br />
-          <label>
-            OTP:
-            <input type="text" value={otp} onChange={(event) => setOtp(event.target.value)}  required />
-          </label>
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
-  );
-};
+        console.log(
+            "OTP sent to",
+            phoneNumber,
+            ":",
+            generatedOtp
+        );
+
+        setOtp(
+            generatedOtp.toString()
+        );
+    };
+
+    const handleSubmit = (event) => {
+
+        event.preventDefault();
+
+        if (!phoneNumber.trim()) {
+            return;
+        }
+
+        sessionStorage.setItem(
+            "phoneNumber",
+            phoneNumber
+        );
+
+        navigate("/home");
+    };
+
+    return (
+
+        <div className="login-container">
+
+            <div className="login-form">
+
+                <h2>
+                    Welcome Back 🚲
+                </h2>
+
+                <p className="login-subtitle">
+                    Book your next ride instantly.
+                </p>
+
+                <form
+                    onSubmit={handleSubmit}
+                >
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        placeholder="Enter phone number"
+                        value={phoneNumber}
+                        onChange={(event) =>
+                            setPhoneNumber(
+                                event.target.value
+                            )
+                        }
+                        required
+                    />
+
+                    <button
+                        type="button"
+                        className="otp-btn"
+                        onClick={generateOtp}
+                    >
+                        Generate OTP
+                    </button>
+
+                    <label>
+                        OTP
+                    </label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter OTP"
+                        value={otp}
+                        onChange={(event) =>
+                            setOtp(
+                                event.target.value
+                            )
+                        }
+                        required
+                    />
+
+                    <button
+                        type="submit"
+                        className="submit-btn"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    );
+}
 
 export default Login;

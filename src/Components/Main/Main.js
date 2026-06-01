@@ -1,48 +1,56 @@
 import "./Main.css";
+
+import { useNavigate } from "react-router-dom";
+
 import logo from "./logo.jpg";
-import {useNavigate} from "react-router-dom";
 
-function Main(){
+function Main() {
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-return(
+    const handleNavigate = () => {
+        navigate("/map");
+    };
 
-<section className="hero">
+    return (
+        <section className="hero">
 
-<div className="hero-left">
+            <div className="hero-left">
 
-<h1>
-Ride Smart.
-Ride Green.
-Ride PedalPal.
-</h1>
+                <h1>
+                    Ride Smart.
+                    <br />
+                    Ride Easy.
+                    <br />
+                    Ride PedalPal.
+                </h1>
 
-<p>
-Find nearby bicycles,
-unlock instantly,
-and enjoy eco-friendly commuting.
-</p>
+                <p>
+                    Discover nearby bicycles,
+                    unlock instantly,
+                    and enjoy smarter urban mobility.
+                </p>
 
-<button
-onClick={()=>navigate("/map")}
->
-Find Bikes Nearby
-</button>
+                <button
+                    className="hero-btn"
+                    onClick={handleNavigate}
+                >
+                    Find Bikes Nearby
+                </button>
 
-</div>
+            </div>
 
-<div className="hero-right">
+            <div className="hero-right">
 
-<img
-src={logo}
-alt="PedalPal"
-/>
+                <img
+                    src={logo}
+                    alt="PedalPal Hero"
+                />
 
-</div>
+            </div>
 
-</section>
-);
+        </section>
+    );
 }
 
 export default Main;

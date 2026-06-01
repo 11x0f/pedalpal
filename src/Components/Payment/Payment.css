@@ -1,216 +1,226 @@
-.payment-page{
+.payment-page {
 
-background:#f8fafc;
+    min-height: 100vh;
 
-min-height:100vh;
+    padding: 50px 6%;
 
-padding:50px 6%;
+    background: #F5FAFD;
 }
 
-.payment-grid{
+.payment-grid {
 
-display:grid;
+    display: grid;
 
-grid-template-columns:2fr 1fr;
+    grid-template-columns: 2fr 1fr;
 
-gap:40px;
+    gap: 40px;
 }
 
-.payment-card{
+.payment-card,
+.summary-card {
 
-background:white;
+    background: white;
 
-padding:40px;
+    padding: 40px;
 
-border-radius:28px;
+    border-radius: 28px;
 
-box-shadow:
-0 15px 45px rgba(0,0,0,.08);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.08);
 }
 
-.payment-card h1{
+.payment-card h1 {
 
-font-size:2.4rem;
+    margin-bottom: 10px;
 
-font-weight:900;
+    color: #2D2F92;
 
-margin-bottom:10px;
+    font-size: 2.4rem;
+
+    font-weight: 900;
 }
 
-.payment-card p{
+.payment-card p {
 
-color:#6b7280;
+    color: #64748B;
 
-margin-bottom:35px;
+    margin-bottom: 35px;
 }
 
-.secure-banner{
+.secure-banner {
 
-background:#dcfce7;
+    margin-bottom: 24px;
 
-padding:18px;
+    padding: 18px;
 
-border-radius:18px;
+    border-radius: 18px;
 
-margin-bottom:24px;
+    background: #EAF8FF;
 
-font-weight:700;
+    color: #14A9E6;
 
-color:#15803d;
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 20px
+        rgba(20,169,230,.10);
 }
 
-.form-group{
+.form-group {
 
-margin-bottom:24px;
+    margin-bottom: 24px;
 }
 
-.form-group label{
+.form-group label {
 
-display:block;
+    display: block;
 
-margin-bottom:12px;
+    margin-bottom: 12px;
 
-font-weight:700;
+    color: #334155;
+
+    font-weight: 700;
 }
 
 .form-group input,
-.form-group select{
+.form-group select {
 
-width:100%;
+    width: 100%;
 
-padding:16px;
+    padding: 16px;
 
-border:1px solid #d1d5db;
+    border: 1px solid #DBE4EE;
 
-border-radius:16px;
+    border-radius: 16px;
 
-outline:none;
+    outline: none;
 
-transition:.25s;
+    transition: .25s ease;
 }
 
 .form-group input:focus,
-.form-group select:focus{
+.form-group select:focus {
 
-border-color:#16a34a;
+    border-color: #14A9E6;
 
-box-shadow:
-0 0 0 4px rgba(22,163,74,.15);
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            20,
+            169,
+            230,
+            .16
+        );
 }
 
-.split-row{
+.split-row {
 
-display:grid;
+    display: grid;
 
-grid-template-columns:1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
-gap:20px;
+    gap: 20px;
 }
 
-.pay-btn{
+.pay-btn {
 
-width:100%;
+    width: 100%;
 
-border:none;
+    border: none;
 
-padding:18px;
+    border-radius: 18px;
 
-border-radius:18px;
+    padding: 18px;
 
-background:
-linear-gradient(
-135deg,
-#16a34a,
-#15803d
-);
+    background:
+        linear-gradient(
+            135deg,
+            #14A9E6,
+            #2D2F92
+        );
 
-color:white;
+    color: white;
 
-font-weight:900;
+    font-size: 16px;
 
-font-size:16px;
+    font-weight: 900;
 
-cursor:pointer;
+    cursor: pointer;
 
-transition:.25s;
+    transition: .25s ease;
 }
 
-.pay-btn:hover{
+.pay-btn:hover {
 
-transform:translateY(-2px);
+    transform: translateY(-2px);
 
-box-shadow:
-0 12px 28px rgba(22,163,74,.35);
+    box-shadow:
+        0 12px 28px
+        rgba(
+            20,
+            169,
+            230,
+            .35
+        );
 }
 
-.summary-card{
+.summary-card h2 {
 
-background:white;
+    margin-bottom: 28px;
 
-padding:34px;
+    color: #2D2F92;
 
-border-radius:28px;
-
-box-shadow:
-0 15px 45px rgba(0,0,0,.08);
+    font-weight: 900;
 }
 
-.summary-card h2{
+.summary-item {
 
-margin-bottom:28px;
+    display: flex;
 
-font-weight:900;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
 }
 
-.summary-item{
+.summary-item span {
 
-display:flex;
-
-justify-content:space-between;
-
-margin-bottom:22px;
+    color: #64748B;
 }
 
-.summary-item span{
+.divider {
 
-color:#6b7280;
+    height: 1px;
+
+    margin: 30px 0;
+
+    background: #E5E7EB;
 }
 
-.divider{
+.price-box {
 
-height:1px;
+    text-align: center;
 
-background:#e5e7eb;
+    color: #14A9E6;
 
-margin:30px 0;
+    font-size: 2.5rem;
+
+    font-weight: 900;
 }
 
-.price-box{
+@media (max-width: 900px) {
 
-font-size:2.5rem;
+    .payment-grid {
 
-font-weight:900;
+        grid-template-columns: 1fr;
+    }
 
-color:#16a34a;
+    .split-row {
 
-text-align:center;
-}
+        grid-template-columns: 1fr;
+    }
 
-@media(max-width:900px){
+    .payment-page {
 
-.payment-grid{
-
-grid-template-columns:1fr;
-}
-
-.split-row{
-
-grid-template-columns:1fr;
-}
-
-.payment-page{
-
-padding:24px;
-}
-
+        padding: 24px;
+    }
 }

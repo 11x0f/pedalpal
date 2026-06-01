@@ -1,183 +1,170 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+
+import {
+    useNavigate,
+    useParams,
+} from "react-router-dom";
+
 import Header from "../Header/Header";
+
 import "./Checkout.css";
 
 function Checkout() {
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-const { Bid, paramPhone } = useParams();
+    const {
+        Bid,
+        paramPhone,
+    } = useParams();
 
-const cyclesData =
-JSON.parse(
-localStorage.getItem("cycles")
-) || [];
+    const cyclesData =
+        JSON.parse(
+            localStorage.getItem(
+                "cycles"
+            )
+        ) || [];
 
-const existingData =
-localStorage.getItem(
-"customerData"
-);
+    const existingData =
+        localStorage.getItem(
+            "customerData"
+        );
 
-const customerData =
-existingData
-? JSON.parse(existingData)
-: [];
+    const customerData =
+        existingData
+            ? JSON.parse(existingData)
+            : [];
 
-const newCustomer = {
+    const selectedCycle =
+        cyclesData[Bid - 1];
 
-phoneNumber:paramPhone,
+    const newCustomer = {
 
-uniqueId:
-cyclesData[Bid-1]?.unqId
+        phoneNumber: paramPhone,
 
-};
+        uniqueId:
+            selectedCycle?.unqId,
+    };
 
-const alreadyExists =
-customerData.some(
+    const alreadyExists =
+        customerData.some(
+            (customer) =>
 
-(customer)=>
+                customer.phoneNumber ===
+                paramPhone &&
 
-customer.phoneNumber ===
-paramPhone
+                customer.uniqueId ===
+                selectedCycle?.unqId
+        );
 
-&&
+    if (!alreadyExists) {
 
-customer.uniqueId ===
-cyclesData[Bid-1]?.unqId
+        customerData.push(
+            newCustomer
+        );
 
-);
+        localStorage.setItem(
 
-if(!alreadyExists){
+            "customerData",
 
-customerData.push(
-newCustomer
-);
+            JSON.stringify(
+                customerData
+            )
+        );
+    }
 
-localStorage.setItem(
+    const handleRedirect = () => {
+        navigate("/");
+    };
 
-"customerData",
+    return (
 
-JSON.stringify(
-customerData
-)
+        <div>
 
-);
+            <Header />
 
-}
+            <div className="checkout-page">
 
-const handleRedirect=()=>{
+                <div className="success-card">
 
-navigate("/");
+                    <div className="success-icon">
+                        ✓
+                    </div>
 
-};
+                    <h1>
+                        Booking Confirmed!
+                    </h1>
 
-return (
+                    <p>
+                        Your cycle has been
+                        successfully booked.
+                    </p>
 
-<div>
+                    <div className="summary-card">
 
-<Header/>
+                        <div className="summary-row">
 
-<div className="checkout-page">
+                            <span>
+                                Cycle ID
+                            </span>
 
-<div className="success-card">
+                            <strong>
+                                #{Bid}
+                            </strong>
 
-<div className="success-icon">
+                        </div>
 
-✓
+                        <div className="summary-row">
 
-</div>
+                            <span>
+                                Phone Number
+                            </span>
 
-<h1>
+                            <strong>
+                                {paramPhone}
+                            </strong>
 
-Booking Confirmed!
+                        </div>
 
-</h1>
+                    </div>
 
-<p>
+                    <div className="unique-id-box">
 
-Your cycle has been successfully booked.
+                        <div className="label">
+                            Return ID
+                        </div>
 
-</p>
+                        <div className="unique-id">
 
-<div className="summary-card">
+                            {
+                                selectedCycle?.unqId
+                            }
 
-<div className="summary-row">
+                        </div>
 
-<span>
-Cycle ID
-</span>
+                        <p>
+                            Save this ID securely.
+                            You will need it while
+                            returning your cycle.
+                        </p>
 
-<strong>
+                    </div>
 
-#{Bid}
+                    <button
+                        className="home-btn"
+                        onClick={
+                            handleRedirect
+                        }
+                    >
+                        Return Home
+                    </button>
 
-</strong>
+                </div>
 
-</div>
+            </div>
 
-<div className="summary-row">
-
-<span>
-Phone Number
-</span>
-
-<strong>
-
-{paramPhone}
-
-</strong>
-
-</div>
-
-</div>
-
-<div className="unique-id-box">
-
-<div className="label">
-
-Return ID
-
-</div>
-
-<div className="unique-id">
-
-{
-cyclesData[
-Bid-1
-]?.unqId
-}
-
-</div>
-
-<p>
-
-Save this ID securely.
-You will need it
-when returning
-your cycle.
-
-</p>
-
-</div>
-
-<button
-className="home-btn"
-onClick={handleRedirect}
->
-
-Return Home
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-);
-
+        </div>
+    );
 }
 
 export default Checkout;

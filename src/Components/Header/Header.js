@@ -1,53 +1,103 @@
 import React from "react";
-import {Navbar,Container,Nav} from "react-bootstrap";
-import {Link,useNavigate} from "react-router-dom";
+
+import {
+    Navbar,
+    Container,
+    Nav,
+} from "react-bootstrap";
+
+import {
+    Link,
+    useNavigate,
+} from "react-router-dom";
+
 import "./Header.css";
 
-function Header(){
+function Header() {
 
-const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
-const logout = () => {
-sessionStorage.removeItem("phoneNumber");
-navigate("/");
-};
+    const navLinks = [
+        {
+            label: "Home",
+            path: "/home",
+        },
+        {
+            label: "Locate Bikes",
+            path: "/map",
+        },
+        {
+            label: "Return",
+            path: "/returnForm",
+        },
+    ];
 
-return(
+    const handleLogout = () => {
 
-<Navbar expand="lg" className="pedal-navbar">
+        sessionStorage.removeItem(
+            "phoneNumber"
+        );
 
-<Container>
+        navigate("/");
+    };
 
-<Navbar.Brand className="brand">
-🚲 PEDALPAL
-</Navbar.Brand>
+    return (
 
-<Navbar.Toggle />
+        <Navbar
+            expand="lg"
+            className="pedal-navbar"
+        >
 
-<Navbar.Collapse>
+            <Container fluid>
 
-<Nav className="mx-auto nav-links">
+                <Navbar.Brand
+                    className="brand"
+                >
+                    🚲 PEDALPAL
+                </Navbar.Brand>
 
-<Link to="/users">Home</Link>
-<Link to="/returnForm">Return</Link>
-<Link to="/pricing">Pricing</Link>
-<Link to="/locate">Locate Bikes</Link>
+                <Navbar.Toggle
+                    aria-controls="main-nav"
+                />
 
-</Nav>
+                <Navbar.Collapse
+                    id="main-nav"
+                >
 
-<button
-className="logout-btn"
-onClick={logout}
->
-Logout
-</button>
+                    <Nav className="nav-links">
 
-</Navbar.Collapse>
+                        {navLinks.map(
+                            (link) => (
 
-</Container>
+                                <Link
+                                    key={link.path}
+                                    to={link.path}
+                                >
+                                    {link.label}
+                                </Link>
 
-</Navbar>
-);
+                            )
+                        )}
+
+                    </Nav>
+
+                    <button
+                        className="logout-btn"
+                        onClick={
+                            handleLogout
+                        }
+                    >
+                        Logout
+                    </button>
+
+                </Navbar.Collapse>
+
+            </Container>
+
+        </Navbar>
+
+    );
 }
 
 export default Header;

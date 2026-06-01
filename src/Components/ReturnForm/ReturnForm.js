@@ -1,170 +1,136 @@
-import React, { useState } from 'react';
-import './ReturnForm.css'; // Import CSS file for styling
-import Header from '../Header/Header';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./ReturnForm.css";
 
+import Header from "../Header/Header";
+
+import { useNavigate } from "react-router-dom";
 
 const ReturnForm = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [uniqueKey, setUniqueKey] = useState('');
-  const [rLocation, setRLocation] = useState('');
 
-  const phoneNum = sessionStorage.getItem('phoneNumber');
-  const navigate = useNavigate();
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [uniqueKey, setUniqueKey] = useState("");
+    const [rLocation, setRLocation] = useState("");
 
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
-  };
+    const phoneNum =
+        sessionStorage.getItem("phoneNumber");
 
-  const handleUniqueKeyChange = (e) => {
-    setUniqueKey(e.target.value);
-  };
+    const navigate = useNavigate();
 
-  const handleReturnHubChange = (e) => {
-    setRLocation(e.target.value);
-  };
+    useEffect(() => {
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+        if (phoneNum === null) {
+            navigate("/");
+        }
 
-    navigate(`/return/${phoneNumber}/${uniqueKey}/${rLocation}`);
-  };
+    }, [navigate, phoneNum]);
 
-  useEffect(() => {
-    if (phoneNum === null) {
-      navigate('/');
-      return;
-    }
-  }, []);
+    const handleSubmit = (e) => {
 
-  return (
-    <div>
-      <Header />
-      <div className="form-container">
-        <form className="form" onSubmit={handleSubmit}>
-          <label className="form-label">Phone Number:</label>
-          <input
-            className="form-input"
-            type="text"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-          />
+        e.preventDefault();
 
-          <label className="form-label">Unique Key:</label>
-          <input
-            className="form-input"
-            type="text"
-            value={uniqueKey}
-            onChange={handleUniqueKeyChange}
-          />
+        navigate(
+            `/return/${phoneNumber}/${uniqueKey}/${rLocation}`
+        );
+    };
 
-          <label className="form-label">Return Hub:</label>
-          <select
-            id="paymentMethod"
-            value={rLocation}
-            onChange={handleReturnHubChange}
-            required
-          >
-            <option value="">Select Return Location</option>
-            <option value="Railway">Railway Station</option>
-            <option value="Airport">Airport</option>
-            <option value="Lulu Mall">Lulu Mall</option>
-          </select>
+    return (
+        <div>
+            <Header />
 
-          <button className="form-button" type="submit">
-            Proceed
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+            <div className="form-container">
+
+                <form
+                    className="form"
+                    onSubmit={handleSubmit}
+                >
+
+                    <h2 className="form-title">
+                        Return Your Bike
+                    </h2>
+
+                    <p className="form-subtitle">
+                        Enter your booking details
+                    </p>
+
+                    <label className="form-label">
+                        Phone Number
+                    </label>
+
+                    <input
+                        className="form-input"
+                        type="tel"
+                        placeholder="Enter phone number"
+                        value={phoneNumber}
+                        onChange={(e) =>
+                            setPhoneNumber(
+                                e.target.value
+                            )
+                        }
+                        required
+                    />
+
+                    <label className="form-label">
+                        Unique Key
+                    </label>
+
+                    <input
+                        className="form-input"
+                        type="text"
+                        placeholder="Enter booking key"
+                        value={uniqueKey}
+                        onChange={(e) =>
+                            setUniqueKey(
+                                e.target.value
+                            )
+                        }
+                        required
+                    />
+
+                    <label className="form-label">
+                        Return Hub
+                    </label>
+
+                    <select
+                        className="form-select"
+                        value={rLocation}
+                        onChange={(e) =>
+                            setRLocation(
+                                e.target.value
+                            )
+                        }
+                        required
+                    >
+                        <option value="">
+                            Select Return Location
+                        </option>
+
+                        <option value="Railway">
+                            Railway Station
+                        </option>
+
+                        <option value="Airport">
+                            Airport
+                        </option>
+
+                        <option value="Lulu Mall">
+                            Lulu Mall
+                        </option>
+
+                    </select>
+
+                    <button
+                        className="form-button"
+                        type="submit"
+                    >
+                        Proceed
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    );
 };
 
 export default ReturnForm;
-
-
-/* function ReturnForm = ({ }) => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [uniqueKey, setUniqueKey] = useState('');
-  const [rLocation,setRLocation] = useState('');
-
-  const phonenum = sessionStorage.getItem("phoneNumber");
-
-  const navigate = useNavigate();
-
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
-  };
-
-  const handleUniqueKeyChange = (e) => {
-    setUniqueKey(e.target.value);
-  };
-
-  const handleReturnHubChange  = (e) => {
-    setRLocation(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    navigate(`/return/${phoneNumber}/${uniqueKey}/${rLocation}`);
-
- /*    // Validation and further processing logic
-    if (phoneNumber && uniqueKey) {
-      onNext(); // Proceed to next page or perform necessary actions
-    }
-  }; */
-  
- /*  useEffect( ()=>{
-    if(phoneNum === null)
-{
-    navigate("/");
-    
-    return ;
-}
-},[])
-
-  return (
-    <div>
-      <Header/>
-      <div className="form-container">
-      <form className="form" onSubmit={handleSubmit}>
-        <label className="form-label">Phone Number:</label>
-        <input
-          className="form-input"
-          type="text"
-          value={phoneNumber}
-          onChange={handlePhoneNumberChange}
-        />
-
-        <label className="form-label">Unique Key:</label>
-        <input
-          className="form-input"
-          type="text"
-          value={uniqueKey}
-          onChange={handleUniqueKeyChange}
-        />
-
-        <label className="form-label">Return Hub:</label>
-        <select
-            id="paymentMethod"
-            value={rLocation}
-            onChange={handleReturnHubChange}
-            required
-          >
-            <option value="">Select Return Location </option>
-            <option value="Railway"> Railway Station </option>
-            <option value="Airport"> Airport </option>
-            <option value="Lulu Mall"> Lulu Mall </option>
-          </select>
-
-        <button className="form-button" type="submit"> Proceed </button>
-      </form>
-    </div>
-    </div>
-  );
-};
-
-export default ReturnForm;
- */ 

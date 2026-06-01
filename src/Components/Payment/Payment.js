@@ -1,513 +1,527 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, {
+    useEffect,
+    useState,
+} from "react";
+
+import {
+    useNavigate,
+    useParams,
+} from "react-router-dom";
+
 import Header from "../Header/Header";
+
 import "./Payment.css";
 
 function Payment() {
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-const {
-Bid,
-paymentMethod,
-hours,
-minutes,
-paramPhone
-} = useParams();
+    const {
+        Bid,
+        paymentMethod,
+        hours,
+        minutes,
+        paramPhone,
+    } = useParams();
 
-const [cyclesData,setCyclesData] =
-useState([]);
+    const [cyclesData, setCyclesData] =
+        useState([]);
 
-const [nameOnCard,setNameOnCard] =
-useState("");
+    const [nameOnCard, setNameOnCard] =
+        useState("");
 
-const [cardNo,setCardNo] =
-useState("");
+    const [cardNo, setCardNo] =
+        useState("");
 
-const [expirationDate,setExpirationDate] =
-useState("");
+    const [expirationDate,
+        setExpirationDate] =
+        useState("");
 
-const [cvv,setCvv] =
-useState("");
+    const [cvv, setCvv] =
+        useState("");
 
-const [bankName,setBankName] =
-useState("");
+    const [bankName, setBankName] =
+        useState("");
 
-const [upiId,setUpiId] =
-useState("");
+    const [upiId, setUpiId] =
+        useState("");
 
-const [username,setUsername] =
-useState("");
+    const [username, setUsername] =
+        useState("");
 
-const [password,setPassword] =
-useState("");
+    const [password, setPassword] =
+        useState("");
 
-const [cardType,setCardType] =
-useState("");
+    const [cardType, setCardType] =
+        useState("");
 
-const [paymentCompany,setPaymentCompany] =
-useState("");
+    const [
+        paymentCompany,
+        setPaymentCompany,
+    ] = useState("");
 
-const amountToBePaid =
-2 * Number(hours)
-+
-0.01 * Number(minutes);
+    const phoneNumber =
+        sessionStorage.getItem(
+            "phoneNumber"
+        );
 
-const phonenum =
-sessionStorage.getItem(
-"phoneNumber"
-);
+    const amountToBePaid =
+        2 * Number(hours) +
+        0.01 * Number(minutes);
 
-useEffect(()=>{
+    useEffect(() => {
 
-if(phonenum===null){
+        if (!phoneNumber) {
+            navigate("/");
+        }
 
-navigate("/");
+    }, [navigate, phoneNumber]);
 
-}
+    useEffect(() => {
 
-},[navigate,phonenum]);
+        const storedCycles =
+            localStorage.getItem(
+                "cycles"
+            );
 
-useEffect(()=>{
+        if (storedCycles) {
 
-const storedCycles =
-localStorage.getItem("cycles");
+            setCyclesData(
+                JSON.parse(
+                    storedCycles
+                )
+            );
+        }
 
-if(storedCycles){
+    }, []);
 
-setCyclesData(
-JSON.parse(storedCycles)
-);
+    const handleSubmit = (event) => {
 
-}
+        event.preventDefault();
 
-},[]);
+        const updatedCycles =
+            cyclesData.map(
+                (cycle) => {
 
-const handleSubmit=(e)=>{
+                    if (
+                        cycle.id ===
+                        Number(Bid)
+                    ) {
 
-e.preventDefault();
+                        return {
+                            ...cycle,
+                            isBooked: true,
+                        };
+                    }
 
-const updatedCycles =
-cyclesData.map((cycle)=>{
+                    return cycle;
+                }
+            );
 
-if(
-cycle.id === Number(Bid)
-){
+        localStorage.setItem(
+            "cycles",
+            JSON.stringify(
+                updatedCycles
+            )
+        );
 
-return {
-...cycle,
-isBooked:true
-};
+        navigate(
+            `/checkout/${Bid}/${paramPhone}`
+        );
+    };
 
-}
+    return (
 
-return cycle;
+        <div>
 
-});
+            <Header />
 
-localStorage.setItem(
-"cycles",
-JSON.stringify(
-updatedCycles
-)
-);
+            <div className="payment-page">
 
-navigate(
-`/checkout/${Bid}/${paramPhone}`
-);
+                <div className="payment-grid">
 
-};
+                    <div className="payment-left">
 
-return (
+                        <div className="secure-banner">
 
-<div>
+                            🔒 Your booking
+                            information is
+                            securely stored
+                            until cycle return.
 
-<Header/>
+                        </div>
 
-<div className="payment-page">
+                        <div className="payment-card">
 
-<div className="payment-grid">
+                            <h1>
+                                Payment Details
+                            </h1>
 
-<div className="payment-left">
+                            <p>
+                                Complete payment
+                                to unlock your ride.
+                            </p>
 
-<div className="secure-banner">
+                            <form
+                                onSubmit={
+                                    handleSubmit
+                                }
+                            >
 
-🔒 Your booking information is securely stored until cycle return.
+                                {paymentMethod === "card" && (
 
-</div>
+                                    <>
 
-<div className="payment-card">
+                                        <div className="form-group">
 
-<h1>
-Payment Details
-</h1>
+                                            <label>
+                                                Name on Card
+                                            </label>
 
-<p>
-Complete payment to unlock your ride.
-</p>
+                                            <input
+                                                type="text"
+                                                value={nameOnCard}
+                                                onChange={(e)=>
+                                                    setNameOnCard(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                            />
 
-<form
-onSubmit={handleSubmit}
->
+                                        </div>
 
-{
-paymentMethod==="card"
-&&(
+                                        <div className="form-group">
 
-<>
+                                            <label>
+                                                Card Number
+                                            </label>
 
-<div className="form-group">
+                                            <input
+                                                type="text"
+                                                value={cardNo}
+                                                onChange={(e)=>
+                                                    setCardNo(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                            />
 
-<label>
-Name on Card
-</label>
+                                        </div>
 
-<input
-type="text"
-value={nameOnCard}
-onChange={(e)=>
-setNameOnCard(
-e.target.value
-)
-}
-required
-/>
+                                        <div className="split-row">
 
-</div>
+                                            <div className="form-group">
 
-<div className="form-group">
+                                                <label>
+                                                    Expiry Date
+                                                </label>
 
-<label>
-Card Number
-</label>
+                                                <input
+                                                    type="text"
+                                                    value={expirationDate}
+                                                    onChange={(e)=>
+                                                        setExpirationDate(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    required
+                                                />
 
-<input
-type="text"
-value={cardNo}
-onChange={(e)=>
-setCardNo(
-e.target.value
-)
-}
-required
-/>
+                                            </div>
 
-</div>
+                                            <div className="form-group">
 
-<div className="split-row">
+                                                <label>
+                                                    CVV
+                                                </label>
 
-<div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    value={cvv}
+                                                    onChange={(e)=>
+                                                        setCvv(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    required
+                                                />
 
-<label>
-Expiry Date
-</label>
+                                            </div>
 
-<input
-type="text"
-value={expirationDate}
-onChange={(e)=>
-setExpirationDate(
-e.target.value
-)
-}
-required
-/>
+                                        </div>
 
-</div>
+                                        <div className="split-row">
 
-<div className="form-group">
+                                            <div className="form-group">
 
-<label>
-CVV
-</label>
+                                                <label>
+                                                    Card Type
+                                                </label>
 
-<input
-type="text"
-value={cvv}
-onChange={(e)=>
-setCvv(
-e.target.value
-)
-}
-required
-/>
+                                                <select
+                                                    value={cardType}
+                                                    onChange={(e)=>
+                                                        setCardType(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                >
 
-</div>
+                                                    <option value="">
+                                                        Select
+                                                    </option>
 
-</div>
+                                                    <option value="credit">
+                                                        Credit Card
+                                                    </option>
 
-<div className="split-row">
+                                                    <option value="debit">
+                                                        Debit Card
+                                                    </option>
 
-<div className="form-group">
+                                                </select>
 
-<label>
-Card Type
-</label>
+                                            </div>
 
-<select
-value={cardType}
-onChange={(e)=>
-setCardType(
-e.target.value
-)
-}
->
+                                            <div className="form-group">
 
-<option value="">
-Select
-</option>
+                                                <label>
+                                                    Company
+                                                </label>
 
-<option value="credit">
-Credit Card
-</option>
+                                                <select
+                                                    value={paymentCompany}
+                                                    onChange={(e)=>
+                                                        setPaymentCompany(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                >
 
-<option value="debit">
-Debit Card
-</option>
+                                                    <option value="">
+                                                        Select
+                                                    </option>
 
-</select>
+                                                    <option value="Visa">
+                                                        Visa
+                                                    </option>
 
-</div>
+                                                    <option value="RuPay">
+                                                        RuPay
+                                                    </option>
 
-<div className="form-group">
+                                                    <option value="MasterCard">
+                                                        MasterCard
+                                                    </option>
 
-<label>
-Company
-</label>
+                                                </select>
 
-<select
-value={paymentCompany}
-onChange={(e)=>
-setPaymentCompany(
-e.target.value
-)
-}
->
+                                            </div>
 
-<option value="">
-Select
-</option>
+                                        </div>
 
-<option value="Visa">
-Visa
-</option>
+                                    </>
 
-<option value="RuPay">
-RuPay
-</option>
+                                )}
 
-<option value="MasterCard">
-MasterCard
-</option>
+                                {paymentMethod === "upi" && (
 
-</select>
+                                    <>
 
-</div>
+                                        <div className="form-group">
 
-</div>
+                                            <label>
+                                                Bank Name
+                                            </label>
 
-</>
+                                            <input
+                                                type="text"
+                                                value={bankName}
+                                                onChange={(e)=>
+                                                    setBankName(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                            />
 
-)}
+                                        </div>
 
-{
-paymentMethod==="upi"
-&&(
+                                        <div className="form-group">
 
-<>
+                                            <label>
+                                                UPI ID
+                                            </label>
 
-<div className="form-group">
+                                            <input
+                                                type="text"
+                                                value={upiId}
+                                                onChange={(e)=>
+                                                    setUpiId(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                            />
 
-<label>
-Bank Name
-</label>
+                                        </div>
 
-<input
-type="text"
-value={bankName}
-onChange={(e)=>
-setBankName(
-e.target.value
-)
-}
-required
-/>
+                                    </>
 
-</div>
+                                )}
 
-<div className="form-group">
+                                {paymentMethod === "netbanking" && (
 
-<label>
-UPI ID
-</label>
+                                    <>
 
-<input
-type="text"
-value={upiId}
-onChange={(e)=>
-setUpiId(
-e.target.value
-)
-}
-required
-/>
+                                        <div className="form-group">
 
-</div>
+                                            <label>
+                                                Username
+                                            </label>
 
-</>
+                                            <input
+                                                type="text"
+                                                value={username}
+                                                onChange={(e)=>
+                                                    setUsername(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                            />
 
-)}
+                                        </div>
 
-{
-paymentMethod==="netbanking"
-&&(
+                                        <div className="form-group">
 
-<>
+                                            <label>
+                                                Password
+                                            </label>
 
-<div className="form-group">
+                                            <input
+                                                type="password"
+                                                value={password}
+                                                onChange={(e)=>
+                                                    setPassword(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                            />
 
-<label>
-Username
-</label>
+                                        </div>
 
-<input
-type="text"
-value={username}
-onChange={(e)=>
-setUsername(
-e.target.value
-)
-}
-required
-/>
+                                        <div className="form-group">
 
-</div>
+                                            <label>
+                                                Bank Name
+                                            </label>
 
-<div className="form-group">
+                                            <input
+                                                type="text"
+                                                value={bankName}
+                                                onChange={(e)=>
+                                                    setBankName(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required
+                                            />
 
-<label>
-Password
-</label>
+                                        </div>
 
-<input
-type="password"
-value={password}
-onChange={(e)=>
-setPassword(
-e.target.value
-)
-}
-required
-/>
+                                    </>
 
-</div>
+                                )}
 
-<div className="form-group">
+                                <button
+                                    className="pay-btn"
+                                    type="submit"
+                                >
 
-<label>
-Bank Name
-</label>
+                                    Pay ₹
+                                    {amountToBePaid.toFixed(
+                                        2
+                                    )}
 
-<input
-type="text"
-value={bankName}
-onChange={(e)=>
-setBankName(
-e.target.value
-)
-}
-required
-/>
+                                </button>
 
-</div>
+                            </form>
 
-</>
+                        </div>
 
-)}
+                    </div>
 
-<button
-className="pay-btn"
-type="submit"
->
+                    <div className="payment-right">
 
-Pay ₹{amountToBePaid.toFixed(2)}
+                        <div className="summary-card">
 
-</button>
+                            <h2>
+                                Booking Summary
+                            </h2>
 
-</form>
+                            <div className="summary-item">
 
-</div>
+                                <span>
+                                    Cycle ID
+                                </span>
 
-</div>
+                                <strong>
+                                    #{Bid}
+                                </strong>
 
-<div className="payment-right">
+                            </div>
 
-<div className="summary-card">
+                            <div className="summary-item">
 
-<h2>
-Booking Summary
-</h2>
+                                <span>
+                                    Duration
+                                </span>
 
-<div className="summary-item">
+                                <strong>
 
-<span>
-Cycle ID
-</span>
+                                    {hours}h {minutes}m
 
-<strong>
-#{Bid}
-</strong>
+                                </strong>
 
-</div>
+                            </div>
 
-<div className="summary-item">
+                            <div className="summary-item">
 
-<span>
-Duration
-</span>
+                                <span>
+                                    Method
+                                </span>
 
-<strong>
+                                <strong>
+                                    {paymentMethod}
+                                </strong>
 
-{hours}h {minutes}m
+                            </div>
 
-</strong>
+                            <div className="divider" />
 
-</div>
+                            <div className="price-box">
 
-<div className="summary-item">
+                                ₹
+                                {amountToBePaid.toFixed(
+                                    2
+                                )}
 
-<span>
-Method
-</span>
+                            </div>
 
-<strong>
+                        </div>
 
-{paymentMethod}
+                    </div>
 
-</strong>
+                </div>
 
-</div>
+            </div>
 
-<div className="divider"></div>
-
-<div className="price-box">
-
-₹ {amountToBePaid.toFixed(2)}
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-);
-
+        </div>
+    );
 }
 
 export default Payment;

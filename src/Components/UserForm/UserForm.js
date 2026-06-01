@@ -1,311 +1,353 @@
 import React, { useState } from "react";
-import "./UserForm.css";
+
+import {
+    useNavigate,
+    useParams,
+} from "react-router-dom";
+
 import Header from "../Header/Header";
-import { useNavigate, useParams } from "react-router-dom";
+
+import "./UserForm.css";
 
 function UserForm() {
 
-const { id } = useParams();
+    const navigate = useNavigate();
 
-const navigate = useNavigate();
+    const { id } = useParams();
 
-const [name, setName] = useState("");
+    const [name, setName] =
+        useState("");
 
-const [phoneNumber, setPhoneNumber] =
-useState("");
+    const [phoneNumber, setPhoneNumber] =
+        useState("");
 
-const [hours, setHours] = useState(0);
+    const [hours, setHours] =
+        useState(0);
 
-const [minutes, setMinutes] = useState(0);
+    const [minutes, setMinutes] =
+        useState(0);
 
-const [paymentMethod, setPaymentMethod] =
-useState("");
+    const [
+        paymentMethod,
+        setPaymentMethod,
+    ] = useState("");
 
-const handleHoursAdd = () => {
-setHours(hours + 1);
-};
+    const handleHoursAdd = () => {
+        setHours(
+            (prev) => prev + 1
+        );
+    };
 
-const handleHoursSubtract = () => {
+    const handleHoursSubtract = () => {
 
-if (hours > 0) {
+        if (hours > 0) {
 
-setHours(hours - 1);
+            setHours(
+                (prev) => prev - 1
+            );
+        }
+    };
 
-}
+    const handleMinutesAdd = () => {
 
-};
+        if (minutes === 59) {
 
-const handleMinutesAdd = () => {
+            setMinutes(0);
 
-if (minutes === 59) {
+            setHours(
+                (prev) => prev + 1
+            );
 
-setMinutes(0);
+            return;
+        }
 
-setHours(hours + 1);
+        setMinutes(
+            (prev) => prev + 1
+        );
+    };
 
-}
-else {
+    const handleMinutesSubtract = () => {
 
-setMinutes(minutes + 1);
+        if (minutes === 0) {
 
-}
+            if (hours > 0) {
 
-};
+                setMinutes(59);
 
-const handleMinutesSubtract = () => {
+                setHours(
+                    (prev) => prev - 1
+                );
+            }
 
-if (minutes === 0) {
+            return;
+        }
 
-if (hours > 0) {
+        setMinutes(
+            (prev) => prev - 1
+        );
+    };
 
-setMinutes(59);
+    const handleSubmit = (event) => {
 
-setHours(hours - 1);
+        event.preventDefault();
 
-}
+        navigate(
+            `/payment/${id}/${name}/${phoneNumber}/${hours}/${minutes}/${paymentMethod}`
+        );
+    };
 
-}
-else {
+    return (
 
-setMinutes(minutes - 1);
+        <div>
 
-}
+            <Header />
 
-};
+            <div className="booking-page">
 
-const handleSubmit = (e) => {
+                <div className="booking-card">
 
-e.preventDefault();
+                    <div className="booking-left">
 
-navigate(
-`/payment/${id}/${name}/${phoneNumber}/${hours}/${minutes}/${paymentMethod}`
-);
+                        <h1>
+                            Complete Your Booking
+                        </h1>
 
-};
+                        <p>
+                            Fill in your details
+                            to unlock your ride.
+                        </p>
+
+                        <form
+                            onSubmit={
+                                handleSubmit
+                            }
+                        >
+
+                            <div className="form-group">
+
+                                <label>
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    placeholder="Enter your name"
+                                    value={name}
+                                    onChange={(e)=>
+                                        setName(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+                            <div className="form-group">
+
+                                <label>
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    placeholder="Enter phone number"
+                                    value={phoneNumber}
+                                    onChange={(e)=>
+                                        setPhoneNumber(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                />
+
+                            </div>
+
+                            <div className="form-group">
+
+                                <label>
+                                    Rental Duration
+                                </label>
+
+                                <div className="time-controls">
+
+                                    <div className="time-box">
+
+                                        <button
+                                            type="button"
+                                            onClick={
+                                                handleHoursSubtract
+                                            }
+                                        >
+                                            −
+                                        </button>
+
+                                        <span>
+                                            {hours} hrs
+                                        </span>
+
+                                        <button
+                                            type="button"
+                                            onClick={
+                                                handleHoursAdd
+                                            }
+                                        >
+                                            +
+                                        </button>
+
+                                    </div>
+
+                                    <div className="time-box">
 
-return (
+                                        <button
+                                            type="button"
+                                            onClick={
+                                                handleMinutesSubtract
+                                            }
+                                        >
+                                            −
+                                        </button>
 
-<div>
+                                        <span>
+                                            {minutes} mins
+                                        </span>
 
-<Header/>
+                                        <button
+                                            type="button"
+                                            onClick={
+                                                handleMinutesAdd
+                                            }
+                                        >
+                                            +
+                                        </button>
 
-<div className="booking-page">
+                                    </div>
 
-<div className="booking-card">
+                                </div>
 
-<div className="booking-left">
+                            </div>
 
-<h1>
-Complete Your Booking
-</h1>
+                            <div className="form-group">
 
-<p>
-Fill in your details to unlock your ride.
-</p>
+                                <label>
+                                    Payment Method
+                                </label>
 
-<form onSubmit={handleSubmit}>
+                                <select
+                                    value={
+                                        paymentMethod
+                                    }
+                                    onChange={(e)=>
+                                        setPaymentMethod(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                >
 
-<div className="form-group">
-
-<label>
-Full Name
-</label>
-
-<input
-type="text"
-value={name}
-onChange={(e)=>
-setName(e.target.value)
-}
-required
-placeholder="Enter your name"
-/>
-
-</div>
-
-<div className="form-group">
-
-<label>
-Phone Number
-</label>
-
-<input
-type="tel"
-value={phoneNumber}
-onChange={(e)=>
-setPhoneNumber(
-e.target.value
-)
-}
-required
-placeholder="Enter phone number"
-/>
-
-</div>
-
-<div className="form-group">
+                                    <option value="">
+                                        Select Payment Method
+                                    </option>
 
-<label>
-Rental Duration
-</label>
+                                    <option value="upi">
+                                        UPI
+                                    </option>
 
-<div className="time-controls">
+                                    <option value="card">
+                                        Card
+                                    </option>
 
-<div className="time-box">
+                                    <option value="netbanking">
+                                        Net Banking
+                                    </option>
 
-<button
-type="button"
-onClick={handleHoursSubtract}
->
-−
-</button>
+                                </select>
 
-<span>
-{hours} hrs
-</span>
+                            </div>
 
-<button
-type="button"
-onClick={handleHoursAdd}
->
-+
-</button>
+                            <button
+                                type="submit"
+                                className="submit-btn"
+                            >
 
-</div>
+                                Continue to Payment
 
-<div className="time-box">
+                            </button>
 
-<button
-type="button"
-onClick={handleMinutesSubtract}
->
-−
-</button>
+                        </form>
 
-<span>
-{minutes} mins
-</span>
+                    </div>
 
-<button
-type="button"
-onClick={handleMinutesAdd}
->
-+
-</button>
+                    <div className="booking-right">
 
-</div>
+                        <div className="summary-card">
 
-</div>
+                            <h2>
+                                Ride Summary
+                            </h2>
 
-</div>
+                            <div className="summary-item">
 
-<div className="form-group">
+                                <span>
+                                    Cycle ID
+                                </span>
 
-<label>
-Payment Method
-</label>
+                                <strong>
+                                    #{id}
+                                </strong>
 
-<select
-value={paymentMethod}
-onChange={(e)=>
-setPaymentMethod(
-e.target.value
-)
-}
-required
->
+                            </div>
 
-<option value="">
-Select Payment Method
-</option>
+                            <div className="summary-item">
 
-<option value="upi">
-UPI
-</option>
+                                <span>
+                                    Duration
+                                </span>
 
-<option value="card">
-Card
-</option>
+                                <strong>
 
-<option value="netbanking">
-Net Banking
-</option>
+                                    {hours}h {minutes}m
 
-</select>
+                                </strong>
 
-</div>
+                            </div>
 
-<button
-type="submit"
-className="submit-btn"
->
+                            <div className="summary-item">
 
-Continue to Payment
+                                <span>
+                                    Payment
+                                </span>
 
-</button>
+                                <strong>
 
-</form>
+                                    {
+                                        paymentMethod ||
+                                        "Not Selected"
+                                    }
 
-</div>
+                                </strong>
 
-<div className="booking-right">
+                            </div>
 
-<div className="summary-card">
+                            <div className="divider" />
 
-<h2>
-Ride Summary
-</h2>
+                            <div className="eco-box">
 
-<div className="summary-item">
+                                🚲 Smart &
+                                Eco-Friendly Ride
 
-<span>Cycle ID</span>
+                            </div>
 
-<strong>
-#{id}
-</strong>
+                        </div>
 
-</div>
+                    </div>
 
-<div className="summary-item">
+                </div>
 
-<span>Duration</span>
+            </div>
 
-<strong>
-{hours}h {minutes}m
-</strong>
-
-</div>
-
-<div className="summary-item">
-
-<span>Payment</span>
-
-<strong>
-{paymentMethod || "Not Selected"}
-</strong>
-
-</div>
-
-<div className="divider"></div>
-
-<div className="eco-box">
-
-🌱 Eco Friendly Ride
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-);
-
+        </div>
+    );
 }
 
 export default UserForm;

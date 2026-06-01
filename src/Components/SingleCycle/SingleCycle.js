@@ -1,102 +1,109 @@
 import React from "react";
+
 import "./SingleCycle.css";
 
 function SingleCycle({ cycle }) {
 
-const {
-image,
-name,
-available,
-hub,
-speed,
-waitingTime
-} = cycle;
+    const {
+        image,
+        name,
+        available,
+        hub,
+        speed,
+        waitingTime,
+    } = cycle;
 
-const handleBook = () => {
-console.log("booking");
-};
+    const handleBook = () => {
+        console.log("booking");
+    };
 
-return (
+    return (
 
-<div className="cycle-card">
+        <div className="single-cycle-card">
 
-<div className="cycle-image-wrapper">
+            <div className="cycle-image-wrapper">
 
-<img
-src={image}
-alt={name}
-className="cycle-image"
-/>
+                <img
+                    src={image}
+                    alt={name}
+                    className="cycle-image"
+                />
 
-<div className="image-overlay"></div>
+                <div className="image-overlay" />
 
-<span
-className={`status-badge ${
-available ? "available" : "busy"
-}`}
->
-{available ? "Available" : "Busy"}
-</span>
+                <span
+                    className={`status-badge ${
+                        available
+                            ? "available"
+                            : "busy"
+                    }`}
+                >
+                    {available
+                        ? "Available"
+                        : "Busy"}
+                </span>
 
-</div>
+            </div>
 
-<div className="cycle-content">
+            <div className="cycle-content">
 
-<div className="title-row">
+                <div className="title-row">
 
-<h3>{name}</h3>
+                    <h3>{name}</h3>
 
-<span className="eco-tag">
-Eco Ride
-</span>
+                    <span className="eco-tag">
+                        Eco Ride
+                    </span>
 
-</div>
+                </div>
 
-<p className="hub-name">
-📍 {hub}
-</p>
+                <p className="hub-name">
+                    📍 {hub}
+                </p>
 
-<div className="cycle-stats">
+                <div className="cycle-stats">
 
-<div className="stat-box">
+                    <div className="stat-box">
 
-<div className="stat-label">
-Speed
-</div>
+                        <div className="stat-label">
+                            Speed
+                        </div>
 
-<div className="stat-value">
-⚡ {speed}
-</div>
+                        <div className="stat-value">
+                            ⚡ {speed}
+                        </div>
 
-</div>
+                    </div>
 
-<div className="stat-box">
+                    <div className="stat-box">
 
-<div className="stat-label">
-Wait Time
-</div>
+                        <div className="stat-label">
+                            Wait Time
+                        </div>
 
-<div className="stat-value">
-⏱ {waitingTime}
-</div>
+                        <div className="stat-value">
+                            ⏱ {waitingTime}
+                        </div>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-<button
-className="rent-btn"
-onClick={handleBook}
-disabled={!available}
->
-{available ? "Book Ride" : "Currently Unavailable"}
-</button>
+                <button
+                    className="rent-btn"
+                    onClick={handleBook}
+                    disabled={!available}
+                >
+                    {available
+                        ? "Book Ride"
+                        : "Currently Unavailable"}
+                </button>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-);
+    );
 }
 
 export default SingleCycle;

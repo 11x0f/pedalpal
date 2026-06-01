@@ -1,46 +1,87 @@
-.pedal-navbar{
-background:#ffffff;
-padding:16px 24px;
-box-shadow:0 8px 30px rgba(0,0,0,0.08);
-position:sticky;
-top:0;
-z-index:1000;
+.pedal-navbar {
+
+    background: #14A9E6;
+
+    padding: 14px 32px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(0,0,0,.12);
 }
 
-.brand{
-font-size:1.6rem;
-font-weight:800;
-color:#16a34a!important;
-letter-spacing:1px;
+.brand {
+
+    color: white !important;
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
 }
 
-.nav-links{
-gap:28px;
+.navbar-collapse {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 28px;
+
+    width: 100%;
 }
 
-.nav-links a{
-text-decoration:none;
-color:#374151;
-font-weight:600;
-transition:0.25s;
+.nav-links {
+
+    display: flex;
+
+    gap: 28px;
+
+    margin: 0 auto;
 }
 
-.nav-links a:hover{
-color:#16a34a;
-transform:translateY(-1px);
+.nav-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .25s ease;
 }
 
-.logout-btn{
-background:#16a34a;
-border:none;
-padding:10px 18px;
-border-radius:12px;
-color:white;
-font-weight:700;
-transition:0.25s;
+.nav-links a:hover {
+
+    color: #EAF9FF;
 }
 
-.logout-btn:hover{
-background:#15803d;
-transform:translateY(-2px);
+.logout-btn {
+
+    border: none;
+
+    background: white;
+
+    color: #2D2F92;
+
+    padding: 10px 18px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.logout-btn:hover {
+
+    background: #2D2F92;
+
+    color: white;
+
+    transform: translateY(-2px);
 }

@@ -1,41 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
-function Home()
-{
-    let navigate = useNavigate();
+function Home() {
 
-    const phoneNumber = sessionStorage.getItem("phoneNumber");
+    const navigate = useNavigate();
 
+    const phoneNumber =
+        sessionStorage.getItem("phoneNumber");
 
+    useEffect(() => {
 
-    useEffect( ()=>{
-        if(phoneNumber === null)
-    {
-        navigate("/");
-        
-        return ;
-    }
-    },[])
+        if (!phoneNumber) {
+            navigate("/");
+        }
 
-  /* if (!phoneNumber) {
-    navigate('/');
-    return null; // or you can render a loading spinner or a message instead
-  } */
+    }, [navigate, phoneNumber]);
 
     return (
-        <div>
-            <Header/>
-            <Main/>
-            {/* <Footer/> */}
+        <div className="home-page">
+
+            <Header />
+
+            <Main />
+            <Footer/>
+
         </div>
-        
     );
-    
 }
 
 export default Home;

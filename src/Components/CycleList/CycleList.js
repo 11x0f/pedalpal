@@ -1,166 +1,177 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, {
+    useEffect,
+    useState,
+} from "react";
+
+import {
+    useNavigate,
+    useParams,
+} from "react-router-dom";
+
 import Header from "../Header/Header";
+
 import "./CycleList.css";
 
 function CycleList() {
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-const [cyclesData, setCyclesData] = useState([]);
+    const { id } = useParams();
 
-const { id } = useParams();
+    const [cyclesData, setCyclesData] =
+        useState([]);
 
-const phonenum = sessionStorage.getItem("phoneNumber");
+    const phoneNumber =
+        sessionStorage.getItem(
+            "phoneNumber"
+        );
 
-useEffect(() => {
+    useEffect(() => {
 
-if (phonenum === null) {
-navigate("/");
-}
+        if (!phoneNumber) {
+            navigate("/");
+        }
 
-}, [navigate, phonenum]);
+    }, [navigate, phoneNumber]);
 
-useEffect(() => {
+    useEffect(() => {
 
-const storedCycles =
-localStorage.getItem("cycles");
+        const storedCycles =
+            localStorage.getItem(
+                "cycles"
+            );
 
-if (storedCycles) {
+        if (storedCycles) {
 
-setCyclesData(
-JSON.parse(storedCycles)
-);
+            setCyclesData(
+                JSON.parse(storedCycles)
+            );
+        }
 
-}
+    }, []);
 
-}, []);
+    const handleRentClick = (
+        cycleId
+    ) => {
 
-const handleRentClick = (id) => {
+        navigate(
+            `/userdetails/${cycleId}`
+        );
+    };
 
-navigate(`/userdetails/${id}`);
+    const filteredCycles =
+        cyclesData.filter(
+            (cycle) =>
 
-};
+                cycle.position
+                    .toLowerCase() ===
+                id.toLowerCase() &&
 
-const filteredCycles =
-cyclesData.filter(
+                !cycle.isBooked
+        );
 
-(cycle)=>
+    return (
 
-cycle.position.toLowerCase() ===
-id.toLowerCase() &&
+        <div className="cycle-page">
 
-!cycle.isBooked
+            <Header />
 
-);
+            <div className="cycle-container">
 
-return (
+                <div className="page-header">
 
-<div className="cycle-page">
+                    <h1>
+                        Available Cycles
+                    </h1>
 
-<Header/>
+                    <p>
+                        Choose your next
+                        eco-friendly ride at
+                        <strong>
+                            {" "} {id}
+                        </strong>
+                    </p>
 
-<div className="cycle-container">
+                </div>
 
-<div className="page-header">
+                <div className="cycle-grid">
 
-<h1>
-Available Cycles
-</h1>
+                    {filteredCycles.length > 0 ? (
 
-<p>
-Choose your next eco-friendly ride at
-<strong> {id}</strong>
-</p>
+                        filteredCycles.map(
+                            (cycle) => (
 
-</div>
+                                <div
+                                    key={cycle.id}
+                                    className="cycle-card"
+                                >
 
-<div className="cycle-grid">
+                                    <div className="card-top">
 
-{
-filteredCycles.length > 0 ?
+                                        <div className="cycle-id">
+                                            #{cycle.id}
+                                        </div>
 
-filteredCycles.map((cycle)=>(
+                                        <div className="status-badge">
+                                            Available
+                                        </div>
 
-<div
-className="cycle-card"
-key={cycle.id}
->
+                                    </div>
 
-<div className="card-top">
+                                    <div className="cycle-model">
+                                        🚲 {cycle.model}
+                                    </div>
 
-<div className="cycle-id">
+                                    <div className="cycle-price">
+                                        ₹{cycle.price}
 
-#{cycle.id}
+                                        <span>
+                                            /hour
+                                        </span>
+                                    </div>
 
-</div>
+                                    <div className="cycle-location">
+                                        📍 {cycle.position}
+                                    </div>
 
-<div className="status-badge">
+                                    <button
+                                        className="rent-btn"
+                                        onClick={() =>
+                                            handleRentClick(
+                                                cycle.id
+                                            )
+                                        }
+                                    >
+                                        Rent Now
+                                    </button>
 
-Available
+                                </div>
+                            )
+                        )
 
-</div>
+                    ) : (
 
-</div>
+                        <div className="empty-state">
 
-<div className="cycle-model">
+                            <h2>
+                                No Cycles Available
+                            </h2>
 
-🚲 {cycle.model}
+                            <p>
+                                Try another hub
+                                or check again later.
+                            </p>
 
-</div>
+                        </div>
 
-<div className="cycle-price">
+                    )}
 
-₹{cycle.price}
+                </div>
 
-<span>/hour</span>
+            </div>
 
-</div>
-
-<div className="cycle-location">
-
-📍 {cycle.position}
-
-</div>
-
-<button
-className="rent-btn"
-onClick={()=>
-handleRentClick(cycle.id)
-}
->
-Rent Now
-</button>
-
-</div>
-
-))
-
-:
-
-<div className="empty-state">
-
-<h2>
-No cycles available
-</h2>
-
-<p>
-Try another hub or
-check again later.
-</p>
-
-</div>
-
-}
-
-</div>
-
-</div>
-
-</div>
-
-);
-
+        </div>
+    );
 }
 
 export default CycleList;
