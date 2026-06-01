@@ -1,50 +1,53 @@
-import React from 'react';
-import {Navbar,Container,Nav} from 'react-bootstrap';
-import { Link , useNavigate } from 'react-router-dom';
+import React from "react";
+import {Navbar,Container,Nav} from "react-bootstrap";
+import {Link,useNavigate} from "react-router-dom";
+import "./Header.css";
 
+function Header(){
 
-function onLogOut(navigate)
-{
-  
-  sessionStorage.removeItem("phoneNumber");
-  console.log(sessionStorage.getItem("phoneNumber"))
-  navigate("/")
-}
-function Header()
-{
-  let navigate=useNavigate();
+const navigate = useNavigate();
 
-    return (<Navbar bg="light" variant="light">
-    <Container>
-    <Navbar.Brand ><strong> HAPPY CYCLING ! </strong></Navbar.Brand>
-    <Nav className="me-auto">
-      <Link style={{margin:"5px"}} to="/users"> <Nav > Home </Nav> </Link>
-      <Link  style={{margin:"5px"}} to="/returnForm"> <Nav > Return </Nav> </Link>
-      <Link style={{margin:"5px"}} to="/pricing"> <Nav> Pricing </Nav> </Link>
-      <Link style={{margin:"5px"}} to="/pricing"> <Nav> Help </Nav> </Link>
-      <Link style={{margin:"5px"}} to="/locate"> <Nav> Locate Bikes </Nav> </Link>
-    </Nav>
-    </Container>
-    <button onClick={()=>onLogOut(navigate)}>Log out</button>
-  </Navbar>);
-    
-}
-
-export default Header ;
-
-
-
-/* import React from 'react';
-
-const Header = () => {
-  return (
-        <ul className='Navbar'>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-  );
+const logout = () => {
+sessionStorage.removeItem("phoneNumber");
+navigate("/");
 };
 
+return(
+
+<Navbar expand="lg" className="pedal-navbar">
+
+<Container>
+
+<Navbar.Brand className="brand">
+🚲 PEDALPAL
+</Navbar.Brand>
+
+<Navbar.Toggle />
+
+<Navbar.Collapse>
+
+<Nav className="mx-auto nav-links">
+
+<Link to="/users">Home</Link>
+<Link to="/returnForm">Return</Link>
+<Link to="/pricing">Pricing</Link>
+<Link to="/locate">Locate Bikes</Link>
+
+</Nav>
+
+<button
+className="logout-btn"
+onClick={logout}
+>
+Logout
+</button>
+
+</Navbar.Collapse>
+
+</Container>
+
+</Navbar>
+);
+}
+
 export default Header;
- */

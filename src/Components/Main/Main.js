@@ -1,31 +1,48 @@
-import React from 'react';
-import './Main.css';
-import logo from './logo.jpg';
-import { useNavigate } from 'react-router-dom';
+import "./Main.css";
+import logo from "./logo.jpg";
+import {useNavigate} from "react-router-dom";
 
-function onProceed(navigate)
-{
-    navigate('/map')
-}
+function Main(){
 
-function Main()
-{
-    let navigate = useNavigate();
-    return (
-        <div className="main">
-            <h1> PEDAL PAL </h1>
-            <img src={logo} alt="logo" />
-            <div className="demoImages">
-                <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOmq8bVhD5CdWNgtmLiaLeTYPWtEkeiPq9iA&usqp=CAU" alt="cycle 1"/>
-                <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkBdkYOxRhaXrSpicEyVxMudHZEPC6Xv3lgg&usqp=CAU" alt="cycle 2"/>
-                <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXKSMWpHcp-yOevsFpP0aqSwZUHv8eq3MHuQ&usqp=CAU" alt="cycle 3"/>
-                
-            </div>
-            <button onClick={()=>onProceed(navigate)}> PROCEED </button>
+const navigate = useNavigate();
 
-        </div>
-    )
+return(
 
+<section className="hero">
+
+<div className="hero-left">
+
+<h1>
+Ride Smart.
+Ride Green.
+Ride PedalPal.
+</h1>
+
+<p>
+Find nearby bicycles,
+unlock instantly,
+and enjoy eco-friendly commuting.
+</p>
+
+<button
+onClick={()=>navigate("/map")}
+>
+Find Bikes Nearby
+</button>
+
+</div>
+
+<div className="hero-right">
+
+<img
+src={logo}
+alt="PedalPal"
+/>
+
+</div>
+
+</section>
+);
 }
 
 export default Main;

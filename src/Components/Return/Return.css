@@ -1,22 +1,184 @@
-.message-box {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .message {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-  
-  .button {
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: seagreen;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+.return-page{
+
+min-height:100vh;
+
+background:#f8fafc;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:50px 24px;
+}
+
+.return-card{
+
+background:white;
+
+width:100%;
+
+max-width:760px;
+
+padding:50px;
+
+border-radius:32px;
+
+text-align:center;
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.10);
+}
+
+.success-circle{
+
+width:120px;
+
+height:120px;
+
+margin:auto;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+border-radius:50%;
+
+background:
+linear-gradient(
+135deg,
+#16a34a,
+#15803d
+);
+
+font-size:3rem;
+
+margin-bottom:28px;
+
+color:white;
+}
+
+.return-card h1{
+
+font-size:2.8rem;
+
+font-weight:900;
+
+color:#111827;
+
+margin-bottom:12px;
+}
+
+.return-card p{
+
+color:#6b7280;
+
+margin-bottom:34px;
+}
+
+.summary-box{
+
+background:#f8fafc;
+
+padding:30px;
+
+border-radius:24px;
+
+margin-bottom:30px;
+}
+
+.summary-row{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-bottom:20px;
+}
+
+.summary-row:last-child{
+
+margin-bottom:0;
+}
+
+.summary-row span{
+
+color:#6b7280;
+}
+
+.thank-you-box{
+
+background:#dcfce7;
+
+padding:22px;
+
+border-radius:20px;
+
+font-weight:700;
+
+color:#166534;
+
+margin-bottom:30px;
+}
+
+.home-btn{
+
+width:100%;
+
+border:none;
+
+padding:18px;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#16a34a,
+#15803d
+);
+
+color:white;
+
+font-size:16px;
+
+font-weight:900;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+.home-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 12px 30px rgba(22,163,74,.35);
+}
+
+@media(max-width:768px){
+
+.return-card{
+
+padding:32px;
+}
+
+.return-card h1{
+
+font-size:2rem;
+}
+
+.summary-row{
+
+flex-direction:column;
+
+gap:8px;
+
+align-items:flex-start;
+}
+
+}

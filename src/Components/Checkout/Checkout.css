@@ -1,35 +1,206 @@
-.checkout-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 20px;
-    width: 300px;
-    margin: 0 auto;
-    margin-top: 20px;
-  }
-  
-  .checkout-heading {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .checkout-information {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  .redirect-button {
-    background-color: seagreen;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .redirect-button:hover {
-    background-color: #45a049;
-  }
-  
+.checkout-page{
+
+min-height:100vh;
+
+background:#f8fafc;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:50px 24px;
+}
+
+.success-card{
+
+background:white;
+
+width:100%;
+
+max-width:760px;
+
+padding:50px;
+
+border-radius:32px;
+
+text-align:center;
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.10);
+}
+
+.success-icon{
+
+width:110px;
+
+height:110px;
+
+margin:auto;
+
+border-radius:50%;
+
+background:#16a34a;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+color:white;
+
+font-size:3rem;
+
+font-weight:900;
+
+margin-bottom:28px;
+}
+
+.success-card h1{
+
+font-size:2.8rem;
+
+font-weight:900;
+
+margin-bottom:12px;
+
+color:#111827;
+}
+
+.success-card p{
+
+color:#6b7280;
+
+margin-bottom:34px;
+}
+
+.summary-card{
+
+background:#f8fafc;
+
+padding:26px;
+
+border-radius:22px;
+
+margin-bottom:32px;
+}
+
+.summary-row{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-bottom:18px;
+}
+
+.summary-row:last-child{
+
+margin-bottom:0;
+}
+
+.summary-row span{
+
+color:#6b7280;
+}
+
+.unique-id-box{
+
+background:#dcfce7;
+
+padding:32px;
+
+border-radius:26px;
+
+margin-bottom:32px;
+}
+
+.label{
+
+font-size:14px;
+
+font-weight:700;
+
+color:#15803d;
+
+margin-bottom:14px;
+
+text-transform:uppercase;
+}
+
+.unique-id{
+
+font-size:2.3rem;
+
+font-weight:900;
+
+color:#166534;
+
+letter-spacing:2px;
+
+margin-bottom:18px;
+}
+
+.unique-id-box p{
+
+margin:0;
+
+color:#166534;
+}
+
+.home-btn{
+
+width:100%;
+
+padding:18px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#16a34a,
+#15803d
+);
+
+color:white;
+
+font-size:16px;
+
+font-weight:900;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+.home-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 12px 28px rgba(22,163,74,.35);
+}
+
+@media(max-width:768px){
+
+.success-card{
+
+padding:32px;
+}
+
+.success-card h1{
+
+font-size:2rem;
+}
+
+.unique-id{
+
+font-size:1.7rem;
+}
+
+}

@@ -1,4 +1,46 @@
-.navbar
-{
-    border:2px solid red;
+.pedal-navbar{
+background:#ffffff;
+padding:16px 24px;
+box-shadow:0 8px 30px rgba(0,0,0,0.08);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.brand{
+font-size:1.6rem;
+font-weight:800;
+color:#16a34a!important;
+letter-spacing:1px;
+}
+
+.nav-links{
+gap:28px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#374151;
+font-weight:600;
+transition:0.25s;
+}
+
+.nav-links a:hover{
+color:#16a34a;
+transform:translateY(-1px);
+}
+
+.logout-btn{
+background:#16a34a;
+border:none;
+padding:10px 18px;
+border-radius:12px;
+color:white;
+font-weight:700;
+transition:0.25s;
+}
+
+.logout-btn:hover{
+background:#15803d;
+transform:translateY(-2px);
 }

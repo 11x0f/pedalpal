@@ -1,27 +1,169 @@
-.hub-container {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    
-    margin-top: 50px;
-  }
-  
-  .hub-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .hub-select {
-    margin-bottom: 20px;
-    max-width: 200px;
-    text-align: center;
-  }
-  
-  .hub-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    
-  }
-  
+.hub-page{
+
+min-height:100vh;
+
+background:#f8fafc;
+
+padding:50px 6%;
+}
+
+.hub-header{
+
+text-align:center;
+
+margin-bottom:50px;
+}
+
+.hub-header h1{
+
+font-size:3rem;
+
+font-weight:900;
+
+color:#111827;
+
+margin-bottom:14px;
+}
+
+.hub-header p{
+
+font-size:1.1rem;
+
+color:#6b7280;
+}
+
+.hub-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(260px,1fr)
+);
+
+gap:28px;
+
+margin-bottom:45px;
+}
+
+.hub-card{
+
+background:white;
+
+padding:34px;
+
+border-radius:28px;
+
+cursor:pointer;
+
+text-align:center;
+
+box-shadow:
+0 15px 40px rgba(0,0,0,.08);
+
+transition:.3s ease;
+
+border:2px solid transparent;
+}
+
+.hub-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+0 22px 60px rgba(0,0,0,.14);
+}
+
+.hub-card.selected{
+
+border-color:#16a34a;
+
+background:#f0fdf4;
+}
+
+.hub-icon{
+
+font-size:3rem;
+
+margin-bottom:20px;
+}
+
+.hub-card h3{
+
+font-size:1.35rem;
+
+font-weight:800;
+
+color:#111827;
+
+margin-bottom:12px;
+}
+
+.hub-card p{
+
+color:#6b7280;
+
+line-height:1.5;
+}
+
+.continue-btn{
+
+display:block;
+
+margin:auto;
+
+padding:18px 34px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#16a34a,
+#15803d
+);
+
+color:white;
+
+font-size:16px;
+
+font-weight:900;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+.continue-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 12px 28px rgba(22,163,74,.35);
+}
+
+.continue-btn:disabled{
+
+background:#9ca3af;
+
+cursor:not-allowed;
+
+box-shadow:none;
+}
+
+@media(max-width:768px){
+
+.hub-header h1{
+
+font-size:2rem;
+}
+
+.hub-page{
+
+padding:24px;
+}
+
+}

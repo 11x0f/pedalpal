@@ -1,50 +1,99 @@
-import React, {useRef, useEffect, useState} from 'react';
-import maplibregl from 'maplibre-gl';
-import './Map.css';
-
+import React from "react";
+import "./Map.css";
+import Header from "../Header/Header";
 
 function Map() {
-  return (
-    <div className="map">
-<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1o_Nm4g6oUQ3dDEFsoq41-K952C81WOk&ehbc=2E312F"
- width="97%"
-  height="700"
-   style={{border: "0"}} 
-   allowfullscreen="" 
-   loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-  );
+
+return (
+
+<div>
+
+<div className="map-page">
+
+<div className="map-header">
+
+<h1>
+
+Locate Bikes Nearby
+
+</h1>
+
+<p>
+
+Explore cycle hubs across Kannur and
+find your nearest available ride.
+
+</p>
+
+</div>
+
+<div className="quick-hubs">
+
+<div className="hub-pill">
+🚆 Railway Station
+</div>
+
+<div className="hub-pill">
+✈️ Airport
+</div>
+
+<div className="hub-pill">
+🏖️ Payyambalam
+</div>
+
+<div className="hub-pill">
+🛍️ Lulu Mall
+</div>
+
+<div className="hub-pill">
+🏙️ Fort Road
+</div>
+
+</div>
+
+<div className="map-card">
+
+<div className="map-overlay">
+
+<div className="live-badge">
+
+🟢 Live Hub Tracking
+
+</div>
+
+</div>
+
+<iframe
+
+title="PedalPal Map"
+
+src="https://www.google.com/maps/d/u/0/embed?mid=1o_Nm4g6oUQ3dDEFsoq41-K952C81WOk&ehbc=2E312F"
+
+width="100%"
+
+height="700"
+
+style={{
+border:0
+}}
+
+loading="lazy"
+
+referrerPolicy=
+"no-referrer-when-downgrade"
+
+>
+
+</iframe>
+
+</div>
+
+</div>
+
+</div>
+
+);
+
 }
-  
 
-
-  export default Map;
-
-/* export default function Map()
-{
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const [lng] = useState(139.753);
-    const [lat] = useState(35.6844);
-    const [zoom] = useState(14);
-    const [API_KEY] = useState('9oidx5317zefdkkw9yjG');
-}
-
-useEffect(() => {
-    if (map.current) return; //stops map from intializing more than once
-    map.current = new maplibregl.Map({
-      container: mapContainer.current,
-      style: 'https://api.maptiler.com/maps/streets-v2/style.json?key=${9oidx5317zefdkkw9yjG}',
-      center: [lng, lat],
-      zoom: zoom
-    });
-  
-  });
-
- return (
-    <div className="map-wrap">
-      <div ref={mapContainer} className="map" />
-    </div>
-  ); 
-
- */
+export default Map;

@@ -1,41 +1,102 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import React from "react";
+import "./SingleCycle.css";
 
-const cycles = [
-    { id: 1, name: 'Cycle 1', model: 'Mountain Bike', isAvail:true, price: 10 },
-    { id: 2, name: 'Cycle 2', model: 'City Bike', isAvail:false, price: 8 },
-    { id: 3, name: 'Cycle 3', model: 'Road Bike', isAvail:true, price: 12 },
-  ];
+function SingleCycle({ cycle }) {
 
-function SingleCycle()
-{
-    return(
-    <Card className="text-center">
-      <Card.Header> {cycles[1].name }</Card.Header>
-      <Card.Body>
-        <Card.Title> {cycles[1].model} </Card.Title>
-        <Card.Text>
-          PRICE/hr = {cycles[1].price}
-        </Card.Text>
-        <Button variant="primary"> RENT </Button>
-      </Card.Body>
-      <Card.Footer className="text-muted"> {cycles[1].isAvail} </Card.Footer>
-    </Card>
-  );
+const {
+image,
+name,
+available,
+hub,
+speed,
+waitingTime
+} = cycle;
+
+const handleBook = () => {
+console.log("booking");
+};
+
+return (
+
+<div className="cycle-card">
+
+<div className="cycle-image-wrapper">
+
+<img
+src={image}
+alt={name}
+className="cycle-image"
+/>
+
+<div className="image-overlay"></div>
+
+<span
+className={`status-badge ${
+available ? "available" : "busy"
+}`}
+>
+{available ? "Available" : "Busy"}
+</span>
+
+</div>
+
+<div className="cycle-content">
+
+<div className="title-row">
+
+<h3>{name}</h3>
+
+<span className="eco-tag">
+Eco Ride
+</span>
+
+</div>
+
+<p className="hub-name">
+📍 {hub}
+</p>
+
+<div className="cycle-stats">
+
+<div className="stat-box">
+
+<div className="stat-label">
+Speed
+</div>
+
+<div className="stat-value">
+⚡ {speed}
+</div>
+
+</div>
+
+<div className="stat-box">
+
+<div className="stat-label">
+Wait Time
+</div>
+
+<div className="stat-value">
+⏱ {waitingTime}
+</div>
+
+</div>
+
+</div>
+
+<button
+className="rent-btn"
+onClick={handleBook}
+disabled={!available}
+>
+{available ? "Book Ride" : "Currently Unavailable"}
+</button>
+
+</div>
+
+</div>
+
+);
 }
-
-    /* return (
-        <ul>
-        {cycles.map((cycle) => (
-          <li key={cycle.id}>
-            <h3>{cycle.name}</h3>
-            <p>Model: {cycle.model}</p>
-            <p>Price: ${cycle.price} per hour</p>
-            <button>Rent</button>
-          </li>
-        ))}
-      </ul>
-    ) */
 
 export default SingleCycle;

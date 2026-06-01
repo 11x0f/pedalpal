@@ -1,65 +1,166 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import Header from '../Header/Header';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import './CycleList.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Header from "../Header/Header";
+import "./CycleList.css";
 
 function CycleList() {
-  const navigate = useNavigate();
-  const [cyclesData, setCyclesData] = useState([]);
-  const { id } = useParams();
 
-  /* console.log("selected option: ", id); */
+const navigate = useNavigate();
 
-  const handleRentClick = (id) => {
-    navigate(`/userdetails/${id}`);
-  };
+const [cyclesData, setCyclesData] = useState([]);
 
-  const phonenum = sessionStorage.getItem("phoneNumber");
+const { id } = useParams();
 
-  useEffect(() => {
-    if (phonenum === null) {
-      navigate("/");
-    }
-  }, []);
+const phonenum = sessionStorage.getItem("phoneNumber");
 
-  useEffect(() => {
-    const storedCycles = localStorage.getItem('cycles');
-    if (storedCycles) {
-      setCyclesData(JSON.parse(storedCycles));
-    }
-  }, []);
+useEffect(() => {
 
-  /* console.log(cyclesData); */
+if (phonenum === null) {
+navigate("/");
+}
 
-  return (
-    <div>
-      <Header />
-      {cyclesData.map((cycle) => {
-        if (
-          cycle.position.toLowerCase() === id.toLowerCase() &&
-          !cycle.isBooked
-        ) {
-          return (
-            <Card className="text-center" key={cycle.id}>
-              <Card.Header>{cycle.id}</Card.Header>
-              <Card.Body>
-                <Card.Title>{cycle.model}</Card.Title>
-                <Card.Text>PRICE/hr = {cycle.price}</Card.Text>
-                <button onClick={() => handleRentClick(cycle.id)}>RENT</button>
-              </Card.Body>
-              <Card.Footer className={`text-muted ${cycle.isBooked ? 'text-red' : 'text-green'}`}>
-                {cycle.isBooked ? "Booked" : "Available"}
-              </Card.Footer>
-            </Card>
-          );
-        }
-        return null;
-      })}
-    </div>
-  );
+}, [navigate, phonenum]);
+
+useEffect(() => {
+
+const storedCycles =
+localStorage.getItem("cycles");
+
+if (storedCycles) {
+
+setCyclesData(
+JSON.parse(storedCycles)
+);
+
+}
+
+}, []);
+
+const handleRentClick = (id) => {
+
+navigate(`/userdetails/${id}`);
+
+};
+
+const filteredCycles =
+cyclesData.filter(
+
+(cycle)=>
+
+cycle.position.toLowerCase() ===
+id.toLowerCase() &&
+
+!cycle.isBooked
+
+);
+
+return (
+
+<div className="cycle-page">
+
+<Header/>
+
+<div className="cycle-container">
+
+<div className="page-header">
+
+<h1>
+Available Cycles
+</h1>
+
+<p>
+Choose your next eco-friendly ride at
+<strong> {id}</strong>
+</p>
+
+</div>
+
+<div className="cycle-grid">
+
+{
+filteredCycles.length > 0 ?
+
+filteredCycles.map((cycle)=>(
+
+<div
+className="cycle-card"
+key={cycle.id}
+>
+
+<div className="card-top">
+
+<div className="cycle-id">
+
+#{cycle.id}
+
+</div>
+
+<div className="status-badge">
+
+Available
+
+</div>
+
+</div>
+
+<div className="cycle-model">
+
+🚲 {cycle.model}
+
+</div>
+
+<div className="cycle-price">
+
+₹{cycle.price}
+
+<span>/hour</span>
+
+</div>
+
+<div className="cycle-location">
+
+📍 {cycle.position}
+
+</div>
+
+<button
+className="rent-btn"
+onClick={()=>
+handleRentClick(cycle.id)
+}
+>
+Rent Now
+</button>
+
+</div>
+
+))
+
+:
+
+<div className="empty-state">
+
+<h2>
+No cycles available
+</h2>
+
+<p>
+Try another hub or
+check again later.
+</p>
+
+</div>
+
+}
+
+</div>
+
+</div>
+
+</div>
+
+);
+
 }
 
 export default CycleList;

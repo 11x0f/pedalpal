@@ -1,35 +1,102 @@
-/* Main.css */
+.hero{
 
-.main {
-    text-align: center;
-    margin: 70px;
-  }
-  
-  h1 {
-    color: #333;
-    font-size: 28px;
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-  }
-  
-  .demoImages {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  button {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
+min-height:85vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:80px 10%;
+
+gap:60px;
+}
+
+.hero-left{
+
+flex:1;
+}
+
+.hero-left h1{
+
+font-size:4rem;
+
+font-weight:900;
+
+line-height:1.1;
+
+color:#111827;
+
+margin-bottom:24px;
+}
+
+.hero-left p{
+
+font-size:1.2rem;
+
+color:#6b7280;
+
+margin-bottom:36px;
+}
+
+.hero-left button{
+
+background:#16a34a;
+
+padding:16px 28px;
+
+border:none;
+
+border-radius:14px;
+
+color:white;
+
+font-size:18px;
+
+font-weight:700;
+
+transition:.25s;
+}
+
+.hero-left button:hover{
+
+transform:translateY(-3px);
+
+background:#15803d;
+}
+
+.hero-right{
+
+flex:1;
+text-align:center;
+}
+
+.hero-right img{
+
+width:100%;
+
+max-width:550px;
+
+border-radius:28px;
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.18);
+}
+
+@media(max-width:900px){
+
+.hero{
+
+flex-direction:column;
+
+text-align:center;
+
+padding:60px 24px;
+}
+
+.hero-left h1{
+
+font-size:2.6rem;
+}
+}

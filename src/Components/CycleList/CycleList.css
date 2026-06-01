@@ -1,13 +1,229 @@
-.text-red {
-    color: red;
-  }
-  
-  .text-green {
-    color: green;
-  }
+.cycle-page{
 
-  .text-center
-  {
-    margin-bottom: 10px;
-    margin: 10px black;
-  }
+background:#f8fafc;
+
+min-height:100vh;
+}
+
+.cycle-container{
+
+padding:40px 6%;
+}
+
+.page-header{
+
+margin-bottom:40px;
+}
+
+.page-header h1{
+
+font-size:2.7rem;
+
+font-weight:900;
+
+color:#111827;
+
+margin-bottom:10px;
+}
+
+.page-header p{
+
+font-size:1.1rem;
+
+color:#6b7280;
+}
+
+.page-header strong{
+
+color:#16a34a;
+}
+
+.cycle-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(320px,1fr)
+);
+
+gap:30px;
+}
+
+.cycle-card{
+
+background:white;
+
+border-radius:28px;
+
+padding:28px;
+
+box-shadow:
+0 12px 35px rgba(0,0,0,.08);
+
+transition:.3s ease;
+}
+
+.cycle-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.14);
+}
+
+.card-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:26px;
+}
+
+.cycle-id{
+
+font-weight:800;
+
+font-size:1rem;
+
+color:#374151;
+}
+
+.status-badge{
+
+background:#dcfce7;
+
+color:#15803d;
+
+padding:10px 16px;
+
+border-radius:999px;
+
+font-size:13px;
+
+font-weight:700;
+}
+
+.cycle-model{
+
+font-size:1.5rem;
+
+font-weight:800;
+
+color:#111827;
+
+margin-bottom:24px;
+}
+
+.cycle-price{
+
+font-size:2rem;
+
+font-weight:900;
+
+color:#16a34a;
+
+margin-bottom:22px;
+}
+
+.cycle-price span{
+
+font-size:1rem;
+
+font-weight:500;
+
+color:#6b7280;
+}
+
+.cycle-location{
+
+margin-bottom:28px;
+
+color:#6b7280;
+
+font-size:1rem;
+}
+
+.rent-btn{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+135deg,
+#16a34a,
+#15803d
+);
+
+color:white;
+
+font-weight:800;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+.rent-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 12px 25px rgba(22,163,74,.35);
+}
+
+.empty-state{
+
+background:white;
+
+padding:70px 40px;
+
+border-radius:28px;
+
+text-align:center;
+
+grid-column:1/-1;
+
+box-shadow:
+0 12px 35px rgba(0,0,0,.08);
+}
+
+.empty-state h2{
+
+font-weight:900;
+
+margin-bottom:12px;
+
+color:#111827;
+}
+
+.empty-state p{
+
+color:#6b7280;
+}
+
+@media(max-width:768px){
+
+.page-header h1{
+
+font-size:2rem;
+}
+
+.cycle-container{
+
+padding:24px;
+}
+
+}

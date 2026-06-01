@@ -62,7 +62,8 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-form">
-        <h2>Login</h2>
+        <h2>Welcome Back 🚲</h2>
+        <p>Book your next ride instantly.</p>
         <form onSubmit={handleLoginFormSubmit}>
           <label>
             Phone Number:

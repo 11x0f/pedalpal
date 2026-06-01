@@ -1,78 +1,154 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Hub.css'; // Import the CSS file
-import Header from '../Header/Header';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
+import "./Hub.css";
 
-function Hub () 
- {
-  const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState('');
+function Hub() {
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+const navigate = useNavigate();
 
- 
-    const navigateToCycleList = () => {
-        navigate(`/cyclelist/${selectedOption}`);
-      };
-      
+const [selectedHub,setSelectedHub] =
+useState("");
 
-  return (
-    <div>
-      <Header />
-      <div className="hub-container">
-        <h1 className="hub-title">SELECT THE CLOSEST HUB</h1>
-        <select className="hub-select" value={selectedOption} onChange={handleOptionChange}>
-          <option value="">Select an option</option>
-          <option value="railway">Railway Station</option>
-          <option value="airport">Airport</option>
-          <option value="lulumall">Lulu Mall</option>
-        </select>
-        <button className="hub-button" onClick={navigateToCycleList(selectedOption)}> Go to CycleList </button>
-      </div>
-    </div>
-  );
+const hubs = [
+
+{
+id:"railway",
+name:"Kannur Railway Station",
+icon:"🚆",
+desc:"Fast city pickup point"
+},
+
+{
+id:"airport",
+name:"Kannur International Airport",
+icon:"✈️",
+desc:"Traveler's mobility hub"
+},
+
+{
+id:"payyambalam",
+name:"Payyambalam Beach",
+icon:"🏖️",
+desc:"Ride along the coastline"
+},
+
+{
+id:"fortroad",
+name:"Fort Road",
+icon:"🏙️",
+desc:"Central city location"
+},
+
+{
+id:"thalassery",
+name:"Thalassery",
+icon:"🌴",
+desc:"Historic coastal route"
+}
+
+];
+
+const handleNavigate=()=>{
+
+if(selectedHub){
+
+navigate(
+`/cyclelist/${selectedHub}`
+);
+
+}
+
 };
+
+return (
+
+<div>
+
+<Header/>
+
+<div className="hub-page">
+
+<div className="hub-header">
+
+<h1>
+
+Choose Your Pickup Hub
+
+</h1>
+
+<p>
+
+Find cycles near popular places in Kannur.
+
+</p>
+
+</div>
+
+<div className="hub-grid">
+
+{
+hubs.map((hub)=>(
+
+<div
+
+key={hub.id}
+
+className={`hub-card ${
+selectedHub===hub.id
+? "selected"
+: ""
+}`}
+
+onClick={()=>
+setSelectedHub(
+hub.id
+)
+}
+
+>
+
+<div className="hub-icon">
+
+{hub.icon}
+
+</div>
+
+<h3>
+
+{hub.name}
+
+</h3>
+
+<p>
+
+{hub.desc}
+
+</p>
+
+</div>
+
+))
+}
+
+</div>
+
+<button
+className="continue-btn"
+onClick={handleNavigate}
+disabled={!selectedHub}
+>
+
+View Available Cycles
+
+</button>
+
+</div>
+
+</div>
+
+);
+
+}
 
 export default Hub;
-
-
-/* import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Hub.css'; // Import the CSS file
-import Header from '../Header/Header';
-
-const Hub = () => {
-  const navigate = useNavigate();
-  const [hub, setSelectedOption] = useState('');
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const navigateToCycleList = () => {
-    console.log(hub);
-    navigate(`/cyclelist/${hub}`);
-    console.log(hub);
-  };
-
-  return (
-    <div>
-        <Header/>
-        <div className="hub-container">
-      <h1 className="hub-title"> SELECT THE CLOSEST HUB </h1>
-      <select className="hub-select" value={Hub} onChange={handleOptionChange}>
-        <option value="">Select an option</option>
-        <option value="railway">Railway Station</option>
-        <option value="airport">Airport</option>
-        <option value="lulumall">Lulu Mall</option>
-      </select>
-      <button className="hub-button" onClick={navigateToCycleList} > Go to CycleList </button>
-    </div>
-    </div>
-    
-  );
-};
-
-export default Hub; */
