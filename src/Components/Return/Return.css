@@ -1,191 +1,107 @@
-.return-page {
-
-    min-height: 100vh;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 50px 24px;
-
-    background: #F5FAFD;
+.ret-page {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
 
-.return-card {
-
-    width: 100%;
-
-    max-width: 760px;
-
-    background: white;
-
-    padding: 50px;
-
-    border-radius: 32px;
-
-    text-align: center;
-
-    box-shadow:
-        0 20px 60px
-        rgba(0,0,0,.10);
+.ret-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 36px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 
-.success-circle {
-
-    width: 120px;
-
-    height: 120px;
-
-    margin: auto auto 28px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #14A9E6,
-            #2D2F92
-        );
-
-    color: white;
-
-    font-size: 3rem;
-
-    font-weight: 900;
+.ret-icon {
+  width: 44px;
+  height: 44px;
+  background: #1a6fd4;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
 }
 
-.return-card h1 {
-
-    margin-bottom: 12px;
-
-    color: #2D2F92;
-
-    font-size: 2.8rem;
-
-    font-weight: 900;
+.ret-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
 }
 
-.return-card p {
-
-    color: #64748B;
-
-    margin-bottom: 34px;
+.ret-sub {
+  font-size: 13px;
+  color: #888780;
+  line-height: 1.5;
+  margin-bottom: 24px;
 }
 
-.summary-box {
-
-    margin-bottom: 30px;
-
-    padding: 30px;
-
-    border-radius: 24px;
-
-    background: #F8FAFC;
+.ret-details {
+  background: #f8f9fb;
+  border-radius: 10px;
+  padding: 2px 16px;
+  margin-bottom: 24px;
+  text-align: left;
 }
 
-.summary-row {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-bottom: 20px;
+.ret-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.06);
+  font-size: 13px;
 }
 
-.summary-row:last-child {
+.ret-row:last-child { border-bottom: none; }
+.ret-row span { color: #888780; }
+.ret-row strong { color: #1a1a1a; font-weight: 500; }
 
-    margin-bottom: 0;
+.ret-mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
 }
 
-.summary-row span {
-
-    color: #64748B;
+.ret-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.thank-you-box {
-
-    margin-bottom: 30px;
-
-    padding: 22px;
-
-    border-radius: 20px;
-
-    background: #EAF8FF;
-
-    color: #14A9E6;
-
-    font-weight: 700;
+.ret-home-btn {
+  width: 100%;
+  height: 42px;
+  background: #1a6fd4;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.1s;
 }
 
-.home-btn {
+.ret-home-btn:hover { background: #1558aa; }
+.ret-home-btn:active { transform: scale(0.98); }
 
-    width: 100%;
-
-    border: none;
-
-    border-radius: 18px;
-
-    padding: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #14A9E6,
-            #2D2F92
-        );
-
-    color: white;
-
-    font-size: 16px;
-
-    font-weight: 900;
-
-    cursor: pointer;
-
-    transition: .25s ease;
+.ret-ride-link {
+  font-size: 13px;
+  color: #888780;
+  text-decoration: none;
+  transition: color 0.15s;
 }
 
-.home-btn:hover {
+.ret-ride-link:hover { color: #1a6fd4; }
 
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 12px 30px
-        rgba(
-            20,
-            169,
-            230,
-            .35
-        );
-}
-
-@media (max-width: 768px) {
-
-    .return-card {
-
-        padding: 32px;
-    }
-
-    .return-card h1 {
-
-        font-size: 2rem;
-    }
-
-    .summary-row {
-
-        flex-direction: column;
-
-        gap: 8px;
-
-        align-items: flex-start;
-    }
+@media (max-width: 480px) {
+  .ret-card { padding: 28px 20px; }
 }

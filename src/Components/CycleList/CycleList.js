@@ -1,177 +1,91 @@
-import React, {
-    useEffect,
-    useState,
-} from "react";
-
-import {
-    useNavigate,
-    useParams,
-} from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import Header from "../Header/Header";
-
 import "./CycleList.css";
 
+const MODEL_META = {
+  "Mountain Bike": { hint: "Best for rough terrain" },
+  "City Bike":     { hint: "Smooth urban commute"   },
+  "Road Bike":     { hint: "Built for speed"        },
+};
+
 function CycleList() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [cycles, setCycles] = useState([]);
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    if (!sessionStorage.getItem("phoneNumber")) navigate("/");
+  }, [navigate]);
 
-    const { id } = useParams();
+  useEffect(() => {
+    const stored = localStorage.getItem("cycles");
+    if (stored) setCycles(JSON.parse(stored));
+  }, []);
 
-    const [cyclesData, setCyclesData] =
-        useState([]);
+  const filtered = cycles.filter(
+    (c) => c.position.toLowerCase() === id.toLowerCase() && !c.isBooked
+  );
 
-    const phoneNumber =
-        sessionStorage.getItem(
-            "phoneNumber"
-        );
+  return (
+    <div>
+      <Header />
 
-    useEffect(() => {
-
-        if (!phoneNumber) {
-            navigate("/");
-        }
-
-    }, [navigate, phoneNumber]);
-
-    useEffect(() => {
-
-        const storedCycles =
-            localStorage.getItem(
-                "cycles"
-            );
-
-        if (storedCycles) {
-
-            setCyclesData(
-                JSON.parse(storedCycles)
-            );
-        }
-
-    }, []);
-
-    const handleRentClick = (
-        cycleId
-    ) => {
-
-        navigate(
-            `/userdetails/${cycleId}`
-        );
-    };
-
-    const filteredCycles =
-        cyclesData.filter(
-            (cycle) =>
-
-                cycle.position
-                    .toLowerCase() ===
-                id.toLowerCase() &&
-
-                !cycle.isBooked
-        );
-
-    return (
-
-        <div className="cycle-page">
-
-            <Header />
-
-            <div className="cycle-container">
-
-                <div className="page-header">
-
-                    <h1>
-                        Available Cycles
-                    </h1>
-
-                    <p>
-                        Choose your next
-                        eco-friendly ride at
-                        <strong>
-                            {" "} {id}
-                        </strong>
-                    </p>
-
-                </div>
-
-                <div className="cycle-grid">
-
-                    {filteredCycles.length > 0 ? (
-
-                        filteredCycles.map(
-                            (cycle) => (
-
-                                <div
-                                    key={cycle.id}
-                                    className="cycle-card"
-                                >
-
-                                    <div className="card-top">
-
-                                        <div className="cycle-id">
-                                            #{cycle.id}
-                                        </div>
-
-                                        <div className="status-badge">
-                                            Available
-                                        </div>
-
-                                    </div>
-
-                                    <div className="cycle-model">
-                                        🚲 {cycle.model}
-                                    </div>
-
-                                    <div className="cycle-price">
-                                        ₹{cycle.price}
-
-                                        <span>
-                                            /hour
-                                        </span>
-                                    </div>
-
-                                    <div className="cycle-location">
-                                        📍 {cycle.position}
-                                    </div>
-
-                                    <button
-                                        className="rent-btn"
-                                        onClick={() =>
-                                            handleRentClick(
-                                                cycle.id
-                                            )
-                                        }
-                                    >
-                                        Rent Now
-                                    </button>
-
-                                </div>
-                            )
-                        )
-
-                    ) : (
-
-                        <div className="empty-state">
-
-                            <h2>
-                                No Cycles Available
-                            </h2>
-
-                            <p>
-                                Try another hub
-                                or check again later.
-                            </p>
-
-                        </div>
-
-                    )}
-
-                </div>
-
-            </div>
-
+      <div className="cl-page">
+        <div className="cl-header">
+          <Link to="/hub" className="cl-back">← Back to hubs</Link>
+          <p className="cl-eyebrow">Step 2 of 3</p>
+          <h1 className="cl-title">
+            Available bikes at <span>{id}</span>
+          </h1>
+          <p className="cl-sub">
+            {filtered.length > 0
+              ? `${filtered.length} bike${filtered.length !== 1 ? "s" : ""} ready to rent — scroll to browse`
+              : "No bikes available at this hub right now"}
+          </p>
         </div>
-    );
+
+        {filtered.length > 0 ? (
+          <div className="cl-scroll-wrapper">
+            <div className="cl-strip">
+              {filtered.map((cycle) => (
+                <div key={cycle.id} className="cl-card">
+                  <div className="cl-card-head">
+                    <span className="cl-bike-id">#{cycle.id}</span>
+                    <span className="cl-badge">Available</span>
+                  </div>
+
+                  <h3 className="cl-model">{cycle.model}</h3>
+                  <p className="cl-hint">{MODEL_META[cycle.model]?.hint}</p>
+
+                  <div className="cl-divider" />
+
+                  <div className="cl-price-row">
+                    <span className="cl-price">₹{cycle.price}</span>
+                    <span className="cl-per">/hour</span>
+                  </div>
+
+                  <button
+                    className="cl-rent-btn"
+                    onClick={() => navigate(`/userdetails/${cycle.id}`)}
+                  >
+                    Rent this bike →
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="cl-empty">
+            <p className="cl-empty-icon">🚲</p>
+            <h2>No bikes here right now</h2>
+            <p>Try another hub or check back soon.</p>
+            <Link to="/hub" className="cl-empty-link">Choose a different hub →</Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default CycleList;

@@ -1,170 +1,82 @@
-import React from "react";
-
-import {
-    useNavigate,
-    useParams,
-} from "react-router-dom";
-
+import { useNavigate, useParams, Link } from "react-router-dom";
 import Header from "../Header/Header";
-
 import "./Checkout.css";
 
 function Checkout() {
+  const navigate = useNavigate();
+  const { Bid, paramPhone } = useParams();
 
-    const navigate = useNavigate();
+  const cyclesData = JSON.parse(localStorage.getItem("cycles")) || [];
+  const selectedCycle = cyclesData.find((c) => c.id === Number(Bid));
 
-    const {
-        Bid,
-        paramPhone,
-    } = useParams();
+  const existingData = localStorage.getItem("customerData");
+  const customerData = existingData ? JSON.parse(existingData) : [];
 
-    const cyclesData =
-        JSON.parse(
-            localStorage.getItem(
-                "cycles"
-            )
-        ) || [];
+  const alreadyExists = customerData.some(
+    (c) => c.phoneNumber === paramPhone && c.uniqueId === selectedCycle?.unqId
+  );
 
-    const existingData =
-        localStorage.getItem(
-            "customerData"
-        );
+  if (!alreadyExists) {
+    customerData.push({ phoneNumber: paramPhone, uniqueId: selectedCycle?.unqId });
+    localStorage.setItem("customerData", JSON.stringify(customerData));
+  }
 
-    const customerData =
-        existingData
-            ? JSON.parse(existingData)
-            : [];
+  return (
+    <div>
+      <Header />
 
-    const selectedCycle =
-        cyclesData[Bid - 1];
+      <div className="co-page">
+        <div className="co-card">
 
-    const newCustomer = {
+          <div className="co-icon">✓</div>
 
-        phoneNumber: paramPhone,
+          <h1 className="co-title">Booking confirmed</h1>
+          <p className="co-sub">Your bike is ready. Enjoy the ride.</p>
 
-        uniqueId:
-            selectedCycle?.unqId,
-    };
-
-    const alreadyExists =
-        customerData.some(
-            (customer) =>
-
-                customer.phoneNumber ===
-                paramPhone &&
-
-                customer.uniqueId ===
-                selectedCycle?.unqId
-        );
-
-    if (!alreadyExists) {
-
-        customerData.push(
-            newCustomer
-        );
-
-        localStorage.setItem(
-
-            "customerData",
-
-            JSON.stringify(
-                customerData
-            )
-        );
-    }
-
-    const handleRedirect = () => {
-        navigate("/");
-    };
-
-    return (
-
-        <div>
-
-            <Header />
-
-            <div className="checkout-page">
-
-                <div className="success-card">
-
-                    <div className="success-icon">
-                        ✓
-                    </div>
-
-                    <h1>
-                        Booking Confirmed!
-                    </h1>
-
-                    <p>
-                        Your cycle has been
-                        successfully booked.
-                    </p>
-
-                    <div className="summary-card">
-
-                        <div className="summary-row">
-
-                            <span>
-                                Cycle ID
-                            </span>
-
-                            <strong>
-                                #{Bid}
-                            </strong>
-
-                        </div>
-
-                        <div className="summary-row">
-
-                            <span>
-                                Phone Number
-                            </span>
-
-                            <strong>
-                                {paramPhone}
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                    <div className="unique-id-box">
-
-                        <div className="label">
-                            Return ID
-                        </div>
-
-                        <div className="unique-id">
-
-                            {
-                                selectedCycle?.unqId
-                            }
-
-                        </div>
-
-                        <p>
-                            Save this ID securely.
-                            You will need it while
-                            returning your cycle.
-                        </p>
-
-                    </div>
-
-                    <button
-                        className="home-btn"
-                        onClick={
-                            handleRedirect
-                        }
-                    >
-                        Return Home
-                    </button>
-
-                </div>
-
+          <div className="co-details">
+            <div className="co-row">
+              <span>Bike</span>
+              <strong>#{Bid}</strong>
             </div>
+            <div className="co-row">
+              <span>Phone</span>
+              <strong>{paramPhone}</strong>
+            </div>
+            {selectedCycle && (
+              <div className="co-row">
+                <span>Type</span>
+                <strong>{selectedCycle.model}</strong>
+              </div>
+            )}
+            {selectedCycle && (
+              <div className="co-row">
+                <span>Hub</span>
+                <strong>{selectedCycle.position}</strong>
+              </div>
+            )}
+          </div>
+
+          <div className="co-return-id-box">
+            <p className="co-return-label">Return ID — save this</p>
+            <p className="co-return-id">{selectedCycle?.unqId}</p>
+            <p className="co-return-hint">
+              You'll need this code to return the bike.
+            </p>
+          </div>
+
+          <div className="co-actions">
+            <button className="co-home-btn" onClick={() => navigate("/home")}>
+              Back to home
+            </button>
+            <Link to="/tracker" className="co-return-link">
+              Track my ride →
+            </Link>
+          </div>
 
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default Checkout;

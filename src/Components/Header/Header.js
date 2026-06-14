@@ -1,103 +1,49 @@
-import React from "react";
-
-import {
-    Navbar,
-    Container,
-    Nav,
-} from "react-bootstrap";
-
-import {
-    Link,
-    useNavigate,
-} from "react-router-dom";
-
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import logo from "../images/logo.jpg";
 import "./Header.css";
 
 function Header() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [hasActiveRide, setHasActiveRide] = useState(false);
 
-    const navigate =
-        useNavigate();
+  useEffect(() => {
+    const phone = sessionStorage.getItem("phoneNumber");
+    const history = JSON.parse(localStorage.getItem("rideHistory") || "[]");
+    setHasActiveRide(history.some((r) => r.phone === phone && r.status === "active"));
+  }, [location]);
 
-    const navLinks = [
-        {
-            label: "Home",
-            path: "/home",
-        },
-        {
-            label: "Locate Bikes",
-            path: "/map",
-        },
-        {
-            label: "Return",
-            path: "/returnForm",
-        },
-    ];
+  const handleLogout = () => {
+    sessionStorage.removeItem("phoneNumber");
+    navigate("/");
+  };
 
-    const handleLogout = () => {
+  return (
+    <header className="header">
+      <div className="header-inner">
+        <Link to="/home" className="header-brand">
+          <img src={logo} alt="PedalPal" className="header-logo" />
+          <span>PedalPal</span>
+        </Link>
 
-        sessionStorage.removeItem(
-            "phoneNumber"
-        );
+        <nav className="header-nav">
+          <Link to="/home" className="header-link">Home</Link>
+          <Link to="/hub" className="header-link">Find a bike</Link>
+          <Link to="/returnForm" className="header-link">Return</Link>
+          <Link to="/tracker" className="header-link header-link--tracker">
+            {hasActiveRide && <span className="header-active-dot" />}
+            My ride
+          </Link>
+          <Link to="/profile" className="header-link">My rides</Link>
+        </nav>
 
-        navigate("/");
-    };
-
-    return (
-
-        <Navbar
-            expand="lg"
-            className="pedal-navbar"
-        >
-
-            <Container fluid>
-
-                <Navbar.Brand
-                    className="brand"
-                >
-                    🚲 PEDALPAL
-                </Navbar.Brand>
-
-                <Navbar.Toggle
-                    aria-controls="main-nav"
-                />
-
-                <Navbar.Collapse
-                    id="main-nav"
-                >
-
-                    <Nav className="nav-links">
-
-                        {navLinks.map(
-                            (link) => (
-
-                                <Link
-                                    key={link.path}
-                                    to={link.path}
-                                >
-                                    {link.label}
-                                </Link>
-
-                            )
-                        )}
-
-                    </Nav>
-
-                    <button
-                        className="logout-btn"
-                        onClick={
-                            handleLogout
-                        }
-                    >
-                        Logout
-                    </button>
-
-                </Navbar.Collapse>
-
-            </Container>
-
-        </Navbar>
-
-    );
+        <button className="header-logout" onClick={handleLogout}>
+          Sign out
+        </button>
+      </div>
+    </header>
+  );
 }
 
 export default Header;

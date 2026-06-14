@@ -1,142 +1,93 @@
-import React, {
-    useEffect,
-    useState,
-} from "react";
-
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import logo from "../images/logo.jpg";
 import "./Login.css";
 
 function Login() {
+  const navigate = useNavigate();
+  const [phone, setPhone] = useState("");
+  const [otpInput, setOtpInput] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState(null);
+  const [otpHint, setOtpHint] = useState("");
+  const [error, setError] = useState("");
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    if (sessionStorage.getItem("phoneNumber")) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
-    const [phoneNumber, setPhoneNumber] =
-        useState("");
+  const sendOtp = () => {
+    if (!phone.trim()) {
+      setError("Enter your phone number first.");
+      return;
+    }
+    setError("");
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    setGeneratedOtp(otp);
+    setOtpHint("Demo OTP: " + otp);
+  };
 
-    const [otp, setOtp] =
-        useState("");
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!phone.trim()) { setError("Please enter your phone number."); return; }
+    if (!generatedOtp)  { setError("Request an OTP first."); return; }
+    if (otpInput !== generatedOtp) { setError("Incorrect OTP — please try again."); return; }
+    sessionStorage.setItem("phoneNumber", phone);
+    navigate("/home");
+  };
 
-    const storedPhone =
-        sessionStorage.getItem(
-            "phoneNumber"
-        );
+  return (
+    <div className="login-shell">
+      <div className="login-card">
+        <img src={logo} alt="PedalPal" className="login-logo" />
 
-    useEffect(() => {
+        <h1 className="login-heading">Log in to your account</h1>
+        <p className="login-sub">Enter your phone number to receive a one-time password.</p>
 
-        if (storedPhone) {
-            navigate("/home");
-        }
+        {error && <div className="login-error">{error}</div>}
 
-    }, [navigate, storedPhone]);
+        <form onSubmit={handleLogin}>
+          <div className="login-field">
+            <label>Phone number</label>
+            <input
+              type="tel"
+              placeholder="e.g. 9876543210"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
 
-    const generateOtp = () => {
-
-        const generatedOtp =
-            Math.floor(
-                100000 +
-                Math.random() * 900000
-            );
-
-        console.log(
-            "OTP sent to",
-            phoneNumber,
-            ":",
-            generatedOtp
-        );
-
-        setOtp(
-            generatedOtp.toString()
-        );
-    };
-
-    const handleSubmit = (event) => {
-
-        event.preventDefault();
-
-        if (!phoneNumber.trim()) {
-            return;
-        }
-
-        sessionStorage.setItem(
-            "phoneNumber",
-            phoneNumber
-        );
-
-        navigate("/home");
-    };
-
-    return (
-
-        <div className="login-container">
-
-            <div className="login-form">
-
-                <h2>
-                    Welcome Back 🚲
-                </h2>
-
-                <p className="login-subtitle">
-                    Book your next ride instantly.
-                </p>
-
-                <form
-                    onSubmit={handleSubmit}
-                >
-
-                    <label>
-                        Phone Number
-                    </label>
-
-                    <input
-                        type="tel"
-                        placeholder="Enter phone number"
-                        value={phoneNumber}
-                        onChange={(event) =>
-                            setPhoneNumber(
-                                event.target.value
-                            )
-                        }
-                        required
-                    />
-
-                    <button
-                        type="button"
-                        className="otp-btn"
-                        onClick={generateOtp}
-                    >
-                        Generate OTP
-                    </button>
-
-                    <label>
-                        OTP
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="Enter OTP"
-                        value={otp}
-                        onChange={(event) =>
-                            setOtp(
-                                event.target.value
-                            )
-                        }
-                        required
-                    />
-
-                    <button
-                        type="submit"
-                        className="submit-btn"
-                    >
-                        Login
-                    </button>
-
-                </form>
-
+          <div className="login-field">
+            <label>One-time password</label>
+            <div className="login-otp-row">
+              <input
+                type="text"
+                placeholder="6-digit OTP"
+                maxLength={6}
+                value={otpInput}
+                onChange={(e) => setOtpInput(e.target.value)}
+              />
+              <button type="button" className="login-otp-btn" onClick={sendOtp}>
+                Send OTP
+              </button>
             </div>
+            {otpHint && <p className="login-otp-hint">{otpHint}</p>}
+          </div>
 
-        </div>
-    );
+          <hr className="login-divider" />
+
+          <button type="submit" className="login-submit">
+            Continue
+          </button>
+        </form>
+
+        <p className="login-footer">
+          By continuing you agree to PedalPal's terms of service.
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default Login;

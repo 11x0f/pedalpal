@@ -1,56 +1,43 @@
+import { useNavigate } from "react-router-dom";
+import logo from "../images/logo.jpg";
 import "./Main.css";
 
-import { useNavigate } from "react-router-dom";
-
-import logo from "./logo.jpg";
-
 function Main() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const stats = [
+    { value: "15+", label: "Bikes available" },
+    { value: "4", label: "Pickup hubs" },
+    { value: "₹8", label: "From per hour" },
+    { value: "0 kg", label: "CO₂ per ride" },
+  ];
 
-    const handleNavigate = () => {
-        navigate("/map");
-    };
+  return (
+    <main>
+      <section className="hero">
+        <div className="hero-text">
+          <p className="hero-eyebrow">Kannur, Kerala</p>
+          <h1 className="hero-heading">
+            Ride smart.<br />
+            Ride <span className="hero-accent">PedalPal.</span>
+          </h1>
+          <p className="hero-body">
+            Discover bicycles near you, book instantly, and enjoy
+            eco-friendly urban mobility across Kannur.
+          </p>
+          <button className="hero-btn" onClick={() => navigate("/hub")}>
+            Find bikes nearby →
+          </button>
+        </div>
 
-    return (
-        <section className="hero">
+        <div className="hero-image">
+          <img src={logo} alt="PedalPal" />
+        </div>
+      </section>
 
-            <div className="hero-left">
 
-                <h1>
-                    Ride Smart.
-                    <br />
-                    Ride Easy.
-                    <br />
-                    Ride PedalPal.
-                </h1>
-
-                <p>
-                    Discover nearby bicycles,
-                    unlock instantly,
-                    and enjoy smarter urban mobility.
-                </p>
-
-                <button
-                    className="hero-btn"
-                    onClick={handleNavigate}
-                >
-                    Find Bikes Nearby
-                </button>
-
-            </div>
-
-            <div className="hero-right">
-
-                <img
-                    src={logo}
-                    alt="PedalPal Hero"
-                />
-
-            </div>
-
-        </section>
-    );
+    </main>
+  );
 }
 
 export default Main;
